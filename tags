@@ -1,0 +1,147 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
+Circle	graphics.py	/^class Circle(Oval):$/;"	c
+DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	v
+DEFAULT_CONFIG	graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	v
+Entry	graphics.py	/^class Entry(GraphicsObject):$/;"	c
+GraphWin	graphics.py	/^class GraphWin(tk.Canvas):$/;"	c
+GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
+GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
+Image	graphics.py	/^class Image(GraphicsObject):$/;"	c
+Line	graphics.py	/^class Line(_BBox):$/;"	c
+OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
+Oval	graphics.py	/^class Oval(_BBox):$/;"	c
+Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
+Polygon	graphics.py	/^class Polygon(GraphicsObject):$/;"	c
+Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
+Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
+Transform	graphics.py	/^class Transform:$/;"	c
+UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
+_BBox	graphics.py	/^class _BBox(GraphicsObject):$/;"	c
+__autoflush	graphics.py	/^    def __autoflush(self):$/;"	m	class:GraphWin	file:
+__checkOpen	graphics.py	/^    def __checkOpen(self):$/;"	m	class:GraphWin	file:
+__init__	graphics.py	/^    def __init__(self, *points):$/;"	m	class:Polygon
+__init__	graphics.py	/^    def __init__(self, center, radius):$/;"	m	class:Circle
+__init__	graphics.py	/^    def __init__(self, options):$/;"	m	class:GraphicsObject
+__init__	graphics.py	/^    def __init__(self, p, *pixmap):$/;"	m	class:Image
+__init__	graphics.py	/^    def __init__(self, p, text):$/;"	m	class:Text
+__init__	graphics.py	/^    def __init__(self, p, width):$/;"	m	class:Entry
+__init__	graphics.py	/^    def __init__(self, p1, p2):$/;"	m	class:Line
+__init__	graphics.py	/^    def __init__(self, p1, p2):$/;"	m	class:Oval
+__init__	graphics.py	/^    def __init__(self, p1, p2):$/;"	m	class:Rectangle
+__init__	graphics.py	/^    def __init__(self, p1, p2, options=["outline","width","fill"]):$/;"	m	class:_BBox
+__init__	graphics.py	/^    def __init__(self, title="Graphics Window",$/;"	m	class:GraphWin
+__init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/;"	m	class:Transform
+__init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Entry	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Line	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Oval	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Point	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Polygon	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Rectangle	file:
+__str__	graphics.py	/^    def __str__(self):$/;"	m	class:Text	file:
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Entry
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:GraphicsObject
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Image
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Line
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Oval
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Point
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Polygon
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Rectangle
+_draw	graphics.py	/^    def _draw(self, canvas, options):$/;"	m	class:Text
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:Entry
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:GraphicsObject
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:Image
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:Point
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:Polygon
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:Text
+_move	graphics.py	/^    def _move(self, dx, dy):$/;"	m	class:_BBox
+_onClick	graphics.py	/^    def _onClick(self, e):$/;"	m	class:GraphWin
+_reconfig	graphics.py	/^    def _reconfig(self, option, setting):$/;"	m	class:GraphicsObject
+_root	graphics.py	/^_root = tk.Tk()$/;"	v
+_setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
+b	drawer.py	/^    b = random.randrange(256)$/;"	v
+checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
+circle	drawer.py	/^    circle = Circle(Point(x,y), radius)$/;"	v
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Entry
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Image
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Line
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Oval
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Point
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Polygon
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Rectangle
+clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
+close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
+color	drawer.py	/^    color = color_rgb(r, g, b)$/;"	v
+color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
+draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
+flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
+g	drawer.py	/^    g = random.randrange(256)$/;"	v
+getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
+getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Image
+getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Text
+getCenter	graphics.py	/^    def getCenter(self):$/;"	m	class:_BBox
+getHeight	graphics.py	/^    def getHeight(self):$/;"	m	class:GraphWin
+getHeight	graphics.py	/^    def getHeight(self):$/;"	m	class:Image
+getMouse	graphics.py	/^    def getMouse(self):$/;"	m	class:GraphWin
+getP1	graphics.py	/^    def getP1(self): return self.p1.clone()$/;"	m	class:_BBox
+getP2	graphics.py	/^    def getP2(self): return self.p2.clone()$/;"	m	class:_BBox
+getPixel	graphics.py	/^    def getPixel(self, x, y):$/;"	m	class:Image
+getPoints	graphics.py	/^    def getPoints(self):$/;"	m	class:Polygon
+getRadius	graphics.py	/^    def getRadius(self):$/;"	m	class:Circle
+getText	graphics.py	/^    def getText(self):$/;"	m	class:Entry
+getText	graphics.py	/^    def getText(self):$/;"	m	class:Text
+getWidth	graphics.py	/^    def getWidth(self):$/;"	m	class:GraphWin
+getWidth	graphics.py	/^    def getWidth(self):$/;"	m	class:Image
+getX	graphics.py	/^    def getX(self): return self.x$/;"	m	class:Point
+getY	graphics.py	/^    def getY(self): return self.y$/;"	m	class:Point
+idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
+imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
+isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
+isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
+move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
+plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
+plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
+promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
+promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
+r	drawer.py	/^    r = random.randrange(256)$/;"	v
+radius	drawer.py	/^    radius = random.randrange(3, 40)$/;"	v
+save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
+screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform
+setArrow	graphics.py	/^    def setArrow(self, option):$/;"	m	class:Line
+setBackground	graphics.py	/^    def setBackground(self, color):$/;"	m	class:GraphWin
+setCoords	graphics.py	/^    def setCoords(self, x1, y1, x2, y2):$/;"	m	class:GraphWin
+setFace	graphics.py	/^    def setFace(self, face):$/;"	m	class:Entry
+setFace	graphics.py	/^    def setFace(self, face):$/;"	m	class:Text
+setFill	graphics.py	/^    def setFill(self, color):$/;"	m	class:Entry
+setFill	graphics.py	/^    def setFill(self, color):$/;"	m	class:GraphicsObject
+setMouseHandler	graphics.py	/^    def setMouseHandler(self, func):$/;"	m	class:GraphWin
+setOutline	graphics.py	/^    def setOutline(self, color):$/;"	m	class:GraphicsObject
+setPixel	graphics.py	/^    def setPixel(self, x, y, color):$/;"	m	class:Image
+setSize	graphics.py	/^    def setSize(self, size):$/;"	m	class:Entry
+setSize	graphics.py	/^    def setSize(self, size):$/;"	m	class:Text
+setStyle	graphics.py	/^    def setStyle(self, style):$/;"	m	class:Entry
+setStyle	graphics.py	/^    def setStyle(self, style):$/;"	m	class:Text
+setText	graphics.py	/^    def setText(self, t):$/;"	m	class:Entry
+setText	graphics.py	/^    def setText(self,text):$/;"	m	class:Text
+setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Entry
+setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Text
+setWidth	graphics.py	/^    def setWidth(self, width):$/;"	m	class:GraphicsObject
+test	graphics.py	/^def test():$/;"	f
+toScreen	graphics.py	/^    def toScreen(self, x, y):$/;"	m	class:GraphWin
+toWorld	graphics.py	/^    def toWorld(self, x, y):$/;"	m	class:GraphWin
+undraw	graphics.py	/^    def undraw(self):$/;"	m	class:GraphicsObject
+undraw	graphics.py	/^    def undraw(self):$/;"	m	class:Image
+update	graphics.py	/^def update():$/;"	f
+win	drawer.py	/^win = GraphWin("Random Circles", 300, 300)$/;"	v
+world	graphics.py	/^    def world(self,xs,ys):$/;"	m	class:Transform
+x	drawer.py	/^    x = random.randrange(5, 295)$/;"	v
+y	drawer.py	/^    y = random.randrange(5, 295)$/;"	v
+yUp	graphics.py	/^    def yUp(self):$/;"	m	class:GraphWin
