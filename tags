@@ -66,9 +66,7 @@ _onClick	graphics.py	/^    def _onClick(self, e):$/;"	m	class:GraphWin
 _reconfig	graphics.py	/^    def _reconfig(self, option, setting):$/;"	m	class:GraphicsObject
 _root	graphics.py	/^_root = tk.Tk()$/;"	v
 _setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
-b	drawer.py	/^    b = random.randrange(256)$/;"	v
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
-circle	drawer.py	/^    circle = Circle(Point(x,y), radius)$/;"	v
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Entry
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Image
@@ -79,11 +77,9 @@ clone	graphics.py	/^    def clone(self):$/;"	m	class:Polygon
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Rectangle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
 close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
-color	drawer.py	/^    color = color_rgb(r, g, b)$/;"	v
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
-g	drawer.py	/^    g = random.randrange(256)$/;"	v
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Image
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Text
@@ -106,13 +102,13 @@ idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
+main	drawer.py	/^def main():$/;"	f
+makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
-r	drawer.py	/^    r = random.randrange(256)$/;"	v
-radius	drawer.py	/^    radius = random.randrange(3, 40)$/;"	v
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
 screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform
 setArrow	graphics.py	/^    def setArrow(self, option):$/;"	m	class:Line
@@ -140,8 +136,5 @@ toWorld	graphics.py	/^    def toWorld(self, x, y):$/;"	m	class:GraphWin
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:GraphicsObject
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:Image
 update	graphics.py	/^def update():$/;"	f
-win	drawer.py	/^win = GraphWin("Random Circles", 300, 300)$/;"	v
 world	graphics.py	/^    def world(self,xs,ys):$/;"	m	class:Transform
-x	drawer.py	/^    x = random.randrange(5, 295)$/;"	v
-y	drawer.py	/^    y = random.randrange(5, 295)$/;"	v
 yUp	graphics.py	/^    def yUp(self):$/;"	m	class:GraphWin
