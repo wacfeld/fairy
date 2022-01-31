@@ -3,9 +3,13 @@ import math
 
 class Square:
     def __init__(self):
-        self.color = None
-        self.piece = None
-        self.pieceimg = None
+        self.rank = None
+        self.file = None
+        self.color = None # color_rgb
+        self.rect = None # Rectangle
+        self.hl = None # Rectangle
+        self.piece = None # character
+        self.pieceimg = None # Image
 
 def makeRect(corner, width, height):
     '''Return a new Rectangle given one corner Point and the dimensions.'''
@@ -16,16 +20,10 @@ def makeRect(corner, width, height):
 
 squareside = 50 # side length of board square
 
-# square colors
-
-squares = None
-pieces  = None
-pieceimgs = None
-hls = None
-hlcol = None
-curcol = None
-colors = None
-win = None
+board  = None
+hlcol  = color_rgb(42,255,42) # highlight color
+colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white
+win    = None
 
 # filenames of all piece sprites
 spritemap = {}
@@ -44,27 +42,31 @@ spritemap['Q'] = 'w-queen.png'
 
 def createboard(width, height):
     # init some stuff
-    global squares, pieces, colors, hlcol, curcol, win, hls, pieceimgs
-    squares   = [[None for y in range(height)] for x in range(width)] # 2d array of Rectangles
-    pieces    = [[None for y in range(height)] for x in range(width)] # same, but for pieces (characters)
-    pieceimgs = [[None for y in range(height)] for x in range(width)] # same, but for piece Images
-    hls       = [[None for y in range(height)] for x in range(width)] # same, but for highlights (Rectangles)
-    colors    = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white, highlight
-    hlcol     = color_rgb(42,255,42)
-    curcol    = 0
+    global board, win
+    board = [[Square() for i in range(height)] for j in range(width)]
 
     win = GraphWin("board", squareside*width, squareside*height) # init window
     win.yUp() # y axis goes bottom to top
 
-    for x in range(8):
-        for y in range(8):
+    curcol = 0 # bottom left corner is black
+    for x in range(width):
+        for y in range(height):
+            cursquare = board[x][y]
+
             curx = x*squareside
             cury = y*squareside
+
+            # draw square
             r = makeRect(Point(curx, cury), squareside, squareside)
-            squares[x][y] = r
             r.setFill(colors[curcol])
             r.setWidth(0)
             r.draw(win)
+
+            # update Square
+            cursquare.rect = r
+            cursquare.color = colors[curcol]
+            cursquare.rank = y
+            cursquare.file = x
 
             # toggle color
             curcol = (-1 * curcol) + 1
@@ -96,33 +98,67 @@ def createboard(width, height):
 #         curhl.draw(win)
         
 
-def hlsquare(file, rank):
-    r = squares[file][rank]
-    curhl = r.clone()
+def hlsquare(s):
+    curhl = s.rect.clone()
     curhl.setFill(hlcol)
     curhl.draw(win)
-    hls[file][rank]
+    if s.piece != None:
+        s.pieceimg.undraw()
+        s.pieceimg.draw(win)
+    s.hl = curhl
 
-def unhlsquare(rank, file):
-    h = hls[file][rank]
-    if h != None:
-        h.undraw()
+def unhlsquare(s):
+    if s.hl != None:
+        s.hl.undraw()
+    s.hl = None
 
-def placepiece(file, rank, piece):
-    delpiece(file, rank)
+
+def placepiece(s, piece):
+    # clear that square first
+    delpiece(s)
+
+    # centered coords to place image
+    file = s.file
+    rank = s.rank
     cx = file*squareside + squareside/2
     cy = rank*squareside + squareside/2
     
+    # image path
     fn = 'sprites/' + spritemap[piece]
 
+    # draw image
     curimg = Image(Point(cx, cy), fn)
     curimg.draw(win)
-    pieceimgs[file][rank] = curimg
 
-def delpiece(file, rank):
-    p = pieceimgs[file][rank]
-    if p != None:
-        p.undraw()
+    # update Square
+    s.piece = piece
+    s.pieceimg = curimg
+
+def delpiece(s):
+    if s.piece != None:
+        s.pieceimg.undraw()
+    s.piece = None
+    s.pieceimg = None
+
+def mouseSquare(m):
+    x = m.getX()
+    y = m.getY()
+    file = math.floor(x/squareside)
+    rank = math.floor(y/squareside)
+    return board[file][rank]
 
 def play(side): # get moves from alternating sides
-    
+    while True:
+        s1 = mouseSquare(win.getMouse())
+        if s1.piece == None:
+            continue
+        hlsquare(s1)
+        s2 = mouseSquare(win.getMouse())
+        p = s1.piece
+        delpiece(s1)
+        placepiece(s2, p)
+        unhlsquare(s1)
+
+
+        
+

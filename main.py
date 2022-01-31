@@ -19,23 +19,25 @@ width = 8
 # read FEN, set up board accordingly, and possibly other things (side to move, etc.)
 def readfen(fen):
     comps = fen.split() # split into components
-    board = comps[0]
+    setup = comps[0]
+    board = drawer.board
 
     # clear board first
     for file in range(width):
         for rank in range(height):
-            drawer.delpiece(file, rank)
+            drawer.delpiece(board[file][rank])
+            
 
     rank = height - 1 # last rank, 0-indexed
     file = 0
-    for c in board:
+    for c in setup:
         if c.isdigit(): # skip that many cells
             file += int(c)
         elif c == '/': # new row
             rank -= 1
             file = 0
         else: # put piece
-            drawer.placepiece(file, rank, c)
+            drawer.placepiece(board[file][rank], c)
             file += 1
 
 
@@ -46,7 +48,6 @@ def main():
     readfen(standard)
     drawer.play('w')
 
-    input()
 
 if __name__ == '__main__':
     main()

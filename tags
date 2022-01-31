@@ -68,6 +68,7 @@ _onClick	graphics.py	/^    def _onClick(self, e):$/;"	m	class:GraphWin
 _reconfig	graphics.py	/^    def _reconfig(self, option, setting):$/;"	m	class:GraphicsObject
 _root	graphics.py	/^_root = tk.Tk()$/;"	v
 _setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
+board	drawer.py	/^board  = None$/;"	v
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Entry
@@ -80,10 +81,9 @@ clone	graphics.py	/^    def clone(self):$/;"	m	class:Rectangle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
 close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
-colors	drawer.py	/^colors = None$/;"	v
+colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white$/;"	v
 createboard	drawer.py	/^def createboard(width, height):$/;"	f
-curcol	drawer.py	/^curcol = None$/;"	v
-delpiece	drawer.py	/^def delpiece(file, rank):$/;"	f
+delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
@@ -105,19 +105,17 @@ getWidth	graphics.py	/^    def getWidth(self):$/;"	m	class:Image
 getX	graphics.py	/^    def getX(self): return self.x$/;"	m	class:Point
 getY	graphics.py	/^    def getY(self): return self.y$/;"	m	class:Point
 height	main.py	/^height = 8$/;"	v
-hlcol	drawer.py	/^hlcol = None$/;"	v
-hls	drawer.py	/^hls = None$/;"	v
-hlsquare	drawer.py	/^def hlsquare(file, rank):$/;"	f
+hlcol	drawer.py	/^hlcol  = color_rgb(42,255,42) # highlight color$/;"	v
+hlsquare	drawer.py	/^def hlsquare(s):$/;"	f
 idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
+mouseSquare	drawer.py	/^def mouseSquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
-pieceimgs	drawer.py	/^pieceimgs = None$/;"	v
-pieces	drawer.py	/^pieces  = None$/;"	v
-placepiece	drawer.py	/^def placepiece(file, rank, piece):$/;"	f
+placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	drawer.py	/^def play(side): # get moves from alternating sides$/;"	f
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
@@ -146,16 +144,15 @@ setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Entry
 setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Text
 setWidth	graphics.py	/^    def setWidth(self, width):$/;"	m	class:GraphicsObject
 spritemap	drawer.py	/^spritemap = {}$/;"	v
-squares	drawer.py	/^squares = None$/;"	v
 squareside	drawer.py	/^squareside = 50 # side length of board square$/;"	v
 test	graphics.py	/^def test():$/;"	f
 toScreen	graphics.py	/^    def toScreen(self, x, y):$/;"	m	class:GraphWin
 toWorld	graphics.py	/^    def toWorld(self, x, y):$/;"	m	class:GraphWin
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:GraphicsObject
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:Image
-unhlsquare	drawer.py	/^def unhlsquare(rank, file):$/;"	f
+unhlsquare	drawer.py	/^def unhlsquare(s):$/;"	f
 update	graphics.py	/^def update():$/;"	f
 width	main.py	/^width = 8$/;"	v
-win	drawer.py	/^win = None$/;"	v
+win	drawer.py	/^win    = None$/;"	v
 world	graphics.py	/^    def world(self,xs,ys):$/;"	m	class:Transform
 yUp	graphics.py	/^    def yUp(self):$/;"	m	class:GraphWin
