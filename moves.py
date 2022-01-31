@@ -2,7 +2,7 @@ import copy
 from objects import *
 
 '''
-- [ ] leapers
+- [x] leapers
 - [ ] riders
 - [ ] not putting the king in check (royalty)
 '''
@@ -42,13 +42,13 @@ def makeleaper(a, b):
         # remove duplicates (e.x. a (2,2) leaper has only 4 moves, not 8
         newlocs = list(set(newlocs))
 
-        boards = [] # boards based on newlocs
+        moves = {} # keys are locs, entries are boards
         
         # perform moves on board
         for l in newlocs:
             cboard = copy.deepcopy(board)
 
-            if cboard[f][r] != None and sameside(cboard.get(l), cboard.get(loc)): # if same side, illegal move (for a leaper)
+            if cboard.get(l) != None and sameside(cboard.get(l), cboard.get(loc)): # if same side, illegal move (for a leaper)
                 continue
 
             # move piece
@@ -56,7 +56,7 @@ def makeleaper(a, b):
             cboard.set(loc, None)
 
             # add to moves
-            boards.append(cboard)
+            moves[l] = cboard
 
-        return (newlocs,boards)
+        return moves
     return p

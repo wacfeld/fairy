@@ -108,6 +108,9 @@ def update(newboard):
         # otherwise, update
         placepiece(s, newpiece)
 
+def hlloc(l):
+    hlsquare(board.get(l))
+
 def hlsquare(s):
     curhl = s.rect.clone()
     curhl.setFill(hlcol)
@@ -117,11 +120,16 @@ def hlsquare(s):
         s.pieceimg.draw(win)
     s.hl = curhl
 
+def unhlloc(l):
+    unhlsquare(board.get(l))
+
 def unhlsquare(s):
     if s.hl != None:
         s.hl.undraw()
     s.hl = None
 
+def locplacepiece(l, piece):
+    placepiece(board.get(l), piece)
 
 def placepiece(s, piece):
     # clear that square first
@@ -147,6 +155,9 @@ def placepiece(s, piece):
     s.piece = piece
     s.pieceimg = curimg
 
+def locdelpiece(l):
+    delpiece(board.get(l))
+
 def delpiece(s):
     if s.piece != None:
         s.pieceimg.undraw()
@@ -158,7 +169,7 @@ def mousesquare(m):
     y = m.getY()
     file = math.floor(x/squareside)
     rank = math.floor(y/squareside)
-    return board[file][rank]
+    return board.get((file,rank))
 
 def getmousesquare():
     return mousesquare(win.getMouse())

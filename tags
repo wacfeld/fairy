@@ -110,6 +110,7 @@ getloc	objects.py	/^    def getloc(self):$/;"	m	class:Square
 getmousesquare	drawer.py	/^def getmousesquare():$/;"	f
 height	main.py	/^height = 8$/;"	v
 hlcol	drawer.py	/^hlcol  = color_rgb(42,255,42) # highlight color$/;"	v
+hlloc	drawer.py	/^def hlloc(l):$/;"	f
 hlsquare	drawer.py	/^def hlsquare(s):$/;"	f
 idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
@@ -117,6 +118,8 @@ inbounds	objects.py	/^    def inbounds(self, loc):$/;"	m	class:Board
 init	drawer.py	/^def init(width, height):$/;"	f
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
+locdelpiece	drawer.py	/^def locdelpiece(l):$/;"	f
+locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
@@ -160,6 +163,7 @@ toScreen	graphics.py	/^    def toScreen(self, x, y):$/;"	m	class:GraphWin
 toWorld	graphics.py	/^    def toWorld(self, x, y):$/;"	m	class:GraphWin
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:GraphicsObject
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:Image
+unhlloc	drawer.py	/^def unhlloc(l):$/;"	f
 unhlsquare	drawer.py	/^def unhlsquare(s):$/;"	f
 update	drawer.py	/^def update(newboard):$/;"	f
 update	graphics.py	/^def update():$/;"	f

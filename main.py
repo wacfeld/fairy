@@ -45,22 +45,32 @@ def play(board, side): # get moves from alternating sides
     N = moves.makeleaper(2,1) # knight
 
     while True:
+        # get target piece
         s1 = drawer.getmousesquare()
         if s1.piece == None:
             continue
+
+        # highlight
         drawer.hlsquare(s1)
-        moves = N(board, s1.getloc())
-        print(moves)
 
-        for m in moves:
-            drawer.hlsquare(m[0])
-        
+        # get possible moves based on piece type
+        m = N(board, s1.getloc())
+        # print(moves)
 
+        # highlight all possible moves
+        for l in m:
+            drawer.hlloc(l)
+
+        # get target location, check if valid
         s2 = drawer.getmousesquare()
-        p = s1.piece
-        delpiece(s1)
-        placepiece(s2, p)
-        unhlsquare(s1)
+        if s2.getloc() in m:
+            board = m[s2.getloc()]
+            drawer.update(board)
+        
+        # undo all highlight
+        drawer.unhlsquare(s1)
+        for l in m:
+            drawer.unhlloc(l)
 
 def main():
     drawer.init(8,8)
@@ -68,7 +78,7 @@ def main():
 
     board = readfen(standard)
     drawer.update(board)
-    input()
+    play(board, 1)
 
 
 if __name__ == '__main__':
