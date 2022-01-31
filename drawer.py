@@ -1,15 +1,7 @@
 from graphics import *
+from objects import *
+import moves
 import math
-
-class Square:
-    def __init__(self):
-        self.rank = None
-        self.file = None
-        self.color = None # color_rgb
-        self.rect = None # Rectangle
-        self.hl = None # Rectangle
-        self.piece = None # character
-        self.pieceimg = None # Image
 
 def makeRect(corner, width, height):
     '''Return a new Rectangle given one corner Point and the dimensions.'''
@@ -40,10 +32,14 @@ spritemap['K'] = 'w-king.png'
 spritemap['q'] = 'b-queen.png'
 spritemap['Q'] = 'w-queen.png'
 
-def createboard(width, height):
+# create board, draw
+def init(width, height):
     # init some stuff
     global board, win
-    board = [[Square() for i in range(height)] for j in range(width)]
+    board = Board()
+
+    # Board.board can hold both characters and Squares as needed, for graphics and backend
+    board.board = [[Square() for i in range(height)] for j in range(width)]
 
     win = GraphWin("board", squareside*width, squareside*height) # init window
     win.yUp() # y axis goes bottom to top
@@ -51,7 +47,7 @@ def createboard(width, height):
     curcol = 0 # bottom left corner is black
     for x in range(width):
         for y in range(height):
-            cursquare = board[x][y]
+            cursquare = board.get((x,y))
 
             curx = x*squareside
             cury = y*squareside
@@ -97,6 +93,20 @@ def createboard(width, height):
 #         curhl.setFill(hlcol)
 #         curhl.draw(win)
         
+# consumes Board, updates the GUI board as needed
+def update(newboard):
+    width = newboard.width
+    height = newboard.height
+    locs = [(x,y) for x in range(width) for y in range(height)]
+
+    for l in locs:
+        # keep in mind the different "types" of these boards, one holds Squares (which hold characters), one holds characters
+        s = board.get(l)
+        newpiece = newboard.get(l)
+        if newpiece == s.piece: # if same, don't need to update this square
+            continue
+        # otherwise, update
+        placepiece(s, newpiece)
 
 def hlsquare(s):
     curhl = s.rect.clone()
@@ -116,6 +126,9 @@ def unhlsquare(s):
 def placepiece(s, piece):
     # clear that square first
     delpiece(s)
+
+    if piece == None: # when told to place None, simply clear that square
+        return
 
     # centered coords to place image
     file = s.file
@@ -140,25 +153,12 @@ def delpiece(s):
     s.piece = None
     s.pieceimg = None
 
-def mouseSquare(m):
+def mousesquare(m):
     x = m.getX()
     y = m.getY()
     file = math.floor(x/squareside)
     rank = math.floor(y/squareside)
     return board[file][rank]
 
-def play(side): # get moves from alternating sides
-    while True:
-        s1 = mouseSquare(win.getMouse())
-        if s1.piece == None:
-            continue
-        hlsquare(s1)
-        s2 = mouseSquare(win.getMouse())
-        p = s1.piece
-        delpiece(s1)
-        placepiece(s2, p)
-        unhlsquare(s1)
-
-
-        
-
+def getmousesquare():
+    return mousesquare(win.getMouse())

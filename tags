@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
+Board	objects.py	/^class Board:$/;"	c
 Circle	graphics.py	/^class Circle(Oval):$/;"	c
 DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	v
 DEFAULT_CONFIG	graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	v
@@ -19,14 +20,13 @@ Oval	graphics.py	/^class Oval(_BBox):$/;"	c
 Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
 Polygon	graphics.py	/^class Polygon(GraphicsObject):$/;"	c
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
-Square	drawer.py	/^class Square:$/;"	c
+Square	objects.py	/^class Square:$/;"	c
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
 _BBox	graphics.py	/^class _BBox(GraphicsObject):$/;"	c
 __autoflush	graphics.py	/^    def __autoflush(self):$/;"	m	class:GraphWin	file:
 __checkOpen	graphics.py	/^    def __checkOpen(self):$/;"	m	class:GraphWin	file:
-__init__	drawer.py	/^    def __init__(self):$/;"	m	class:Square
 __init__	graphics.py	/^    def __init__(self, *points):$/;"	m	class:Polygon
 __init__	graphics.py	/^    def __init__(self, center, radius):$/;"	m	class:Circle
 __init__	graphics.py	/^    def __init__(self, options):$/;"	m	class:GraphicsObject
@@ -40,6 +40,8 @@ __init__	graphics.py	/^    def __init__(self, p1, p2, options=["outline","width"
 __init__	graphics.py	/^    def __init__(self, title="Graphics Window",$/;"	m	class:GraphWin
 __init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/;"	m	class:Transform
 __init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
+__init__	objects.py	/^    def __init__(self):$/;"	m	class:Square
+__init__	objects.py	/^    def __init__(self, width=None, height=None): # init with board created for us$/;"	m	class:Board
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Entry	file:
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Line	file:
@@ -82,10 +84,10 @@ clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
 close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
 colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white$/;"	v
-createboard	drawer.py	/^def createboard(width, height):$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
+get	objects.py	/^    def get(self, loc):$/;"	m	class:Board
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Image
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Text
@@ -104,26 +106,34 @@ getWidth	graphics.py	/^    def getWidth(self):$/;"	m	class:GraphWin
 getWidth	graphics.py	/^    def getWidth(self):$/;"	m	class:Image
 getX	graphics.py	/^    def getX(self): return self.x$/;"	m	class:Point
 getY	graphics.py	/^    def getY(self): return self.y$/;"	m	class:Point
+getloc	objects.py	/^    def getloc(self):$/;"	m	class:Square
+getmousesquare	drawer.py	/^def getmousesquare():$/;"	f
 height	main.py	/^height = 8$/;"	v
 hlcol	drawer.py	/^hlcol  = color_rgb(42,255,42) # highlight color$/;"	v
 hlsquare	drawer.py	/^def hlsquare(s):$/;"	f
 idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
+inbounds	objects.py	/^    def inbounds(self, loc):$/;"	m	class:Board
+init	drawer.py	/^def init(width, height):$/;"	f
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
-mouseSquare	drawer.py	/^def mouseSquare(m):$/;"	f
+makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
+mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
+p	moves.py	/^    def p(board, loc):$/;"	f	function:makeleaper
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
-play	drawer.py	/^def play(side): # get moves from alternating sides$/;"	f
+play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
 readfen	main.py	/^def readfen(fen):$/;"	f
+sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
 screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform
+set	objects.py	/^    def set(self, loc, piece):$/;"	m	class:Board
 setArrow	graphics.py	/^    def setArrow(self, option):$/;"	m	class:Line
 setBackground	graphics.py	/^    def setBackground(self, color):$/;"	m	class:GraphWin
 setCoords	graphics.py	/^    def setCoords(self, x1, y1, x2, y2):$/;"	m	class:GraphWin
@@ -151,6 +161,7 @@ toWorld	graphics.py	/^    def toWorld(self, x, y):$/;"	m	class:GraphWin
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:GraphicsObject
 undraw	graphics.py	/^    def undraw(self):$/;"	m	class:Image
 unhlsquare	drawer.py	/^def unhlsquare(s):$/;"	f
+update	drawer.py	/^def update(newboard):$/;"	f
 update	graphics.py	/^def update():$/;"	f
 width	main.py	/^width = 8$/;"	v
 win	drawer.py	/^win    = None$/;"	v
