@@ -3,20 +3,6 @@ import moves
 import pieces
 from objects import *
 
-'''
-- [x] make a chessboard
-- [x] figure out where clicks land
-- [x] put pieces on the chessboard
-- [x] FEN -> board
-- [ ] board -> FEN
-- [x] move pieces on the chessboard
-- [ ] get legal moves on chessboard, based on arbitrary fairy chess move properties
-- [ ] determine check and checkmate
-- [ ] make an engine that's good
-- [ ] make object oriented
-- [ ] make readfen() call drawer.update()
-'''
-
 
 height = 8
 width = 8
