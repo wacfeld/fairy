@@ -1,6 +1,6 @@
 from graphics import *
 from objects import *
-import moves
+
 import math
 
 def makeRect(corner, width, height):

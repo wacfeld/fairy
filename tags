@@ -4,17 +4,21 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+A	pieces.py	/^A = makeleaper(2,2) # alfil$/;"	v
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
 Board	objects.py	/^class Board:$/;"	c
 Circle	graphics.py	/^class Circle(Oval):$/;"	c
+D	pieces.py	/^D = makeleaper(0,2) # dabbaba$/;"	v
 DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	v
 DEFAULT_CONFIG	graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	v
 Entry	graphics.py	/^class Entry(GraphicsObject):$/;"	c
+F	pieces.py	/^F = makeleaper(1,1) # ferz$/;"	v
 GraphWin	graphics.py	/^class GraphWin(tk.Canvas):$/;"	c
 GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
 GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
 Image	graphics.py	/^class Image(GraphicsObject):$/;"	c
 Line	graphics.py	/^class Line(_BBox):$/;"	c
+N	pieces.py	/^N = makeleaper(2,1) # knight$/;"	v
 OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
 Oval	graphics.py	/^class Oval(_BBox):$/;"	c
 Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
@@ -24,6 +28,7 @@ Square	objects.py	/^class Square:$/;"	c
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
+W	pieces.py	/^W = makeleaper(0,1) # wazir$/;"	v
 _BBox	graphics.py	/^class _BBox(GraphicsObject):$/;"	c
 __autoflush	graphics.py	/^    def __autoflush(self):$/;"	m	class:GraphWin	file:
 __checkOpen	graphics.py	/^    def __checkOpen(self):$/;"	m	class:GraphWin	file:
@@ -70,6 +75,7 @@ _onClick	graphics.py	/^    def _onClick(self, e):$/;"	m	class:GraphWin
 _reconfig	graphics.py	/^    def _reconfig(self, option, setting):$/;"	m	class:GraphicsObject
 _root	graphics.py	/^_root = tk.Tk()$/;"	v
 _setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
+addlocs	main.py	/^def addlocs(a, b):$/;"	f
 board	drawer.py	/^board  = None$/;"	v
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
@@ -122,6 +128,7 @@ locdelpiece	drawer.py	/^def locdelpiece(l):$/;"	f
 locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
+makeleap	moves.py	/^def makeleap(a,b):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject

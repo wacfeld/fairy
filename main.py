@@ -1,5 +1,6 @@
 import drawer
 import moves
+import pieces
 from objects import *
 
 '''
@@ -20,6 +21,9 @@ from objects import *
 height = 8
 width = 8
 
+# add two locations coordinate wise
+def addlocs(a, b):
+    return (a[0] + b[0], a[1] + b[1])
 
 # read FEN, set up board accordingly, and possibly other things (side to move, etc.)
 def readfen(fen):
@@ -42,8 +46,7 @@ def readfen(fen):
     return board
 
 def play(board, side): # get moves from alternating sides
-    N = moves.makeleaper(2,1) # knight
-
+    N = pieces.D
     while True:
         # get target piece
         s1 = drawer.getmousesquare()
