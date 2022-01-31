@@ -35,6 +35,30 @@ that is to say, each modifier takes in a (loc, board) pair and either:
 therefore modifiers must be applied in order, and are not commutative
 we must determine whether a move is cylindrical/noncylindrical before determine things such as capture by replacement
 
+actually no.
+cylindrical, circular modifiers, are special.
+
+such modifiers are applied to both "dir" and "loc".
+so for example, the cylindrical modifier would perform modular arithmetic on every loc after it is created
+a circular modifier would be tricky, but it should be possible by modifying dir.
+why is this necessary?
+riders have to integrate with them
+a cylindrical rider does not know where to stop. the only way is by hitting a duplicate.
+if we go fully in a loop as i rider, we know to stop
+then, we can filter it through ordinary modifiers such as capture by replacement
+therefore to get all the rider moves, we move it as a leaper,
+then we apply such special modifiers
+then we add it to the candidate moves
+and we loop until we hit a duplicate (the direction of the duplicate must be the same, too)
+(but then how to we figure out legal moves for hoppers, etc. on a cylinder?)
+right. the modifier persists. to check if something is capturing by replacement with no jumps, for example,
+we simply add the direction from the src to the dest repeatedly, BUT in between each addition, we perform the aforementioned special modifiers
+this way you can, for example, jump, while also moving cylindrically or circularly
+therefore every "move" is this tuple:
+    (src, dest, dir, board)
+
+also to consider, some moves (such as riders?) may branch into alternatives.
+therefore each modifier applied to a move should return a list of the modified moves, which is either empty (illegal move in the first place) or one, or more
 '''
 
 # all pieces come in the form of functions
