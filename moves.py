@@ -44,19 +44,31 @@ def replace(p):
             m.board = deepcopy(board)
             m.board.set(m.dest, m.board.get(src))
             m.board.set(src   , None)
+
+            # see if any captures occur
+            if board.get(m.dest) != None: # something was captured
+                m.aux['captures'] = [(m.dest, True)] # add to list of things it captures
+                # True indicates it is a necessary capture
+
         return moves
     return q
 
 
-# # either allows or disallows friendly fire
-# def friendly(p, allowed):
-#     if allowed == True: # then nothing needs to be changed
-#         return p
+# ban friendly fire
+def nofriendly(m):
 
-#     def q(board, src):
-#         moves = p(board, src)
-#         # filter out ones where we capture our own piece
+# either allows or disallows friendly fire
+def friendly(p, allowed):
+    if allowed == True: # then nothing needs to be changed
+        return p
 
+    
+    def q(board, src):
+        moves = p(board, src)
+        # filter out ones where we capture our own piece
+        for m in moves:
+            if 'captures' not in m.aux: # nothing gets captured
+                
 
 
 # ex. makeleaper(2,1) is a knight

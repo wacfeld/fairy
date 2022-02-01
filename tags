@@ -95,6 +95,7 @@ colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # b
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
+friendly	moves.py	/^def friendly(p, allowed):$/;"	f
 get	objects.py	/^    def get(self, loc):$/;"	m	class:Board
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Image
@@ -133,6 +134,7 @@ makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
+nofriendly	moves.py	/^def nofriendly(m):$/;"	f
 nowrap	moves.py	/^def nowrap(p):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleaper
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
@@ -142,6 +144,7 @@ plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	clas
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
 protoleap	moves.py	/^def protoleap(a,b):$/;"	f
+q	moves.py	/^    def q(board, src):$/;"	f	function:friendly
 q	moves.py	/^    def q(board, src):$/;"	f	function:nowrap
 q	moves.py	/^    def q(board, src):$/;"	f	function:replace
 readfen	main.py	/^def readfen(fen):$/;"	f

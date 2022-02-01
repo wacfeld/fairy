@@ -125,5 +125,15 @@ but the move itself is not banned!
 on the contrary, if an ortodox knight is trying to capture a friendly piece, that move is banned altogether
 perhaps we need a new function which takes a look at the modifications made to aux, and decides whether we can keep going like this, or must stop
 
+solution: we define captures as being "necessary" or "unnecessary"
+this is not the most general solution, but it's simple and should work for most things
+i can change it if necessary
+so something such as friendly() that comes in and bans friendly captures, will check if such a capture is necessary for the move to occur. all captures by replacement are necessary captures. on the other hand, a withdrawer capture, say, does not have to occur, if it moves away from a friendly piece
+if a capture is banned but the move goes forward, we simply replace the captured square with what was there originally
+
 also my implementation of Move and leapers forgets about the modification functions that will be needed for riders (cylindrical, non, etc.)
 i.e. a function similar to non-wrap must be builtin to every Move, i believe
+
+so: there are two types of modifiers
+one makes side effects occur ("map", however not necessarily one-to-one)
+one determines if such a move is legal ("filter")
