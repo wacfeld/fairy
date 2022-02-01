@@ -46,4 +46,4 @@ class Move:
         self.dest  = dest  # where we end up
         self.dir   = dir   # how we get there
         self.board = board # result & side effects
-        self.aux   = aux   # any other information about how we move
+        self.aux   = aux   # any other information about how we move (a dictionary)

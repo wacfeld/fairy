@@ -133,7 +133,8 @@ makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
-p	moves.py	/^    def p(board, loc):$/;"	f	function:makeleaper
+nowrap	moves.py	/^def nowrap(p):$/;"	f
+p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleaper
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin

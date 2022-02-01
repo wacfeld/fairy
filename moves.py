@@ -29,31 +29,38 @@ def protoleap(a,b):
 
     return offsets
 
+# no cylindrical wrapping
+def nowrap(p):
+
 # ex. makeleaper(2,1) is a knight
 def makeleaper(a, b):
-    def p(board, loc):
+    # p1 leaps from src to dest without regard for captures, or illegal coordinates
+    def p1(board, src):
         # get all candidate moves (8 total, not necessarily unique)
         offsets = makeleap(a,b)
-        newlocs = [addlocs(loc, x) for x in offsets] # add offsets to loc
 
-        # filter out illegal coordinates
-        newlocs = list(filter(lambda x: board.inbounds(x), newlocs))
-
-        moves = {} # keys are locs, entries are boards
-        
-        # perform moves on board
-        for l in newlocs:
-            cboard = copy.deepcopy(board)
-
-            if cboard.get(l) != None and sameside(cboard.get(l), cboard.get(loc)): # if same side, illegal move (for a leaper)
-                continue
-
-            # move piece
-            cboard.set(l, cboard.get(loc))
-            cboard.set(loc, None)
-
-            # add to moves
-            moves[l] = cboard
-
+        # turn into list of Moves
+        moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
+
+    p2 = nowrap(p1)
+
+
+        # moves = {} # keys are locs, entries are boards
+        
+        # # perform moves on board
+        # for l in newlocs:
+        #     cboard = copy.deepcopy(board)
+
+        #     if cboard.get(l) != None and sameside(cboard.get(l), cboard.get(loc)): # if same side, illegal move (for a leaper)
+        #         continue
+
+        #     # move piece
+        #     cboard.set(l, cboard.get(loc))
+        #     cboard.set(loc, None)
+
+        #     # add to moves
+        #     moves[l] = cboard
+
+        # return moves
     return p
