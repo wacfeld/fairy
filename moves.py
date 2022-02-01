@@ -10,10 +10,10 @@ import main
 def sameside(p1, p2):
     return (p1.isupper() and p2.isupper()) or (p1.islower() and p2.islower())
 
-# makeleap simply returns  a list of location offsets that a leaper can move by
+# simply returns  a list of location offsets that a leaper can move by
 # makeleaper turns this into a piece (a function) which captures by replacement, stays within board bounds, etc.
 # this facilitates the creation of riders, cylindrical pieces, etc.
-def makeleap(a,b):
+def protoleap(a,b):
     offsets = [
             (-a, -b),
             (-a, +b),
@@ -32,10 +32,6 @@ def makeleap(a,b):
 # ex. makeleaper(2,1) is a knight
 def makeleaper(a, b):
     def p(board, loc):
-        # break down coordinates
-        file = loc[0]
-        rank = loc[1]
-
         # get all candidate moves (8 total, not necessarily unique)
         offsets = makeleap(a,b)
         newlocs = [addlocs(loc, x) for x in offsets] # add offsets to loc

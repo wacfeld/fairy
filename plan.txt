@@ -2,7 +2,7 @@
 # funtions are called to obtain the legal moves a piece can make on a given board at a certain location
 # viz. p(board, file, rank) gets the moves for piece p
 # moves are in the form of a pair of a location, and the resulting board
-^^^ outdated
+^^^ partially outdated
 
 - [x] leapers
 - [ ] riders
@@ -60,7 +60,7 @@ then, we can filter it through ordinary modifiers such as capture by replacement
 therefore to get all the rider moves, we move it as a leaper,
 then we apply such special modifiers
 then we add it to the candidate moves
-and we loop until we hit a duplicate (the direction of the duplicate must be the same, too)
+and we loop until we hit a duplicate (the direction and aux of the duplicate must be the same, too)
 (but then how to we figure out legal moves for hoppers, etc. on a cylinder?)
 right. the modifier persists. to check if something is capturing by replacement with no jumps, for example,
 we simply add the direction from the src to the dest repeatedly, BUT in between each addition, we perform the aforementioned special modifiers
@@ -71,3 +71,47 @@ therefore every "move" is this tuple:
 perhaps movemodifiers should be external, i don't know
 also to consider, some moves (such as riders?) may branch into alternatives.
 therefore each modifier applied to a move should return a list of the modified moves, which is either empty (illegal move in the first place) or one, or more
+
+keep in mind all of this has to take place between functions
+
+pieces start being able to jump by default, and are banned from jumping by a modifier
+
+to make a leaper:
+we get the list of offsets
+then, we combine them with src to get a list of (src,dest)
+we attach the dir, but NOT the board yet
+we perform the modifier 
+
+after the proto-phase (the 1st one) everything can be done in terms of lists of Moves
+
+perhaps a downside of this scheme is that we cannot simply call makerider() on some leaper to get a rider.
+we have to call it on the protoleaper
+but that is not a huge loss
+
+circular motion (rose):
+2,1
+1,2
+-1,2
+-2,1
+-2,-1
+-1,-2
+1,-2
+2,-1
+however, you can go two ways around this circle.
+therefore you cannot tell which should come next, based on the current dir
+more data has to be provided
+perhaps, we could have another element of the tuple, with any data necessary for the type of move being performed, e.x. clockwise and counterclockwise
+this data will be in the form of a dictionary. keys and values can be added as needed
+
+like roses, crooked bishops, for example, will take advantage of this data
+call the data 'aux' for auxiliary
+
+need to consider how to implement crooked pieces, skip/ski/slip pieces, etc.
+crooked pieces are a special case of concatenation of move sets
+in the case of, ex. bent rooks,
+it's a ferz and then a rook.
+however the rook must move OUTWARDS
+that is probably something that can be built into the aux
+
+
+it should not be a tuple, it should be an object

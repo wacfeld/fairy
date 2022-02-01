@@ -39,3 +39,11 @@ class Board:
         file = loc[0]
         rank = loc[1]
         return (0 <= file < self.width) and (0 <= rank < self.height)
+
+class Move:
+    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):
+        self.src   = src   # where we start
+        self.dest  = dest  # where we end up
+        self.dir   = dir   # how we get there
+        self.board = board # result & side effects
+        self.aux   = aux   # any other information about how we move

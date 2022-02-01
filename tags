@@ -18,6 +18,7 @@ GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
 GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
 Image	graphics.py	/^class Image(GraphicsObject):$/;"	c
 Line	graphics.py	/^class Line(_BBox):$/;"	c
+Move	objects.py	/^class Move:$/;"	c
 N	pieces.py	/^N = makeleaper(2,1) # knight$/;"	v
 OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
 Oval	graphics.py	/^class Oval(_BBox):$/;"	c
@@ -46,6 +47,7 @@ __init__	graphics.py	/^    def __init__(self, title="Graphics Window",$/;"	m	cla
 __init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/;"	m	class:Transform
 __init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
 __init__	objects.py	/^    def __init__(self):$/;"	m	class:Square
+__init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):$/;"	m	class:Move
 __init__	objects.py	/^    def __init__(self, width=None, height=None): # init with board created for us$/;"	m	class:Board
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Entry	file:
@@ -128,7 +130,6 @@ locdelpiece	drawer.py	/^def locdelpiece(l):$/;"	f
 locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
-makeleap	moves.py	/^def makeleap(a,b):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
@@ -139,6 +140,7 @@ plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
+protoleap	moves.py	/^def protoleap(a,b):$/;"	f
 readfen	main.py	/^def readfen(fen):$/;"	f
 sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
