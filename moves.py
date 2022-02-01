@@ -30,44 +30,74 @@ def protoleap(a,b):
     return offsets
 
 # no cylindrical wrapping
-def nowrap(p):
-    def q(board, src):
-        moves = p(board, src)
-        moves = list(filter(board.inbounds, moves))
-    return q
+def nowrap(board, m):
+    if not board.inbounds(m.dest): # not allowed to go out of bounds
+        return []
+    return [m]
+
+# def nowrap(p):
+#     def q(board, src):
+#         moves = p(board, src)
+#         moves = list(filter(board.inbounds, moves))
+#     return q
 
 # simplest move. implies capture by replacement and leaping, regardless of enemy or friend. simply overwrites dest with src, then deletes src
-def replace(p):
+def replace(board, m):
+    m.board = deepcopy(board)
+    m.board.set(m.dest, m.board.get(src))
+    m.board.set(src, None)
+    return [m]
+
+# def replace(p):
+#     def q(board, src):
+#         moves = p(board, src)
+#         for m in moves:
+#             m.board = deepcopy(board)
+#             m.board.set(m.dest, m.board.get(src))
+#             m.board.set(src   , None)
+
+#             # see if any captures occur
+#             if board.get(m.dest) != None: # something was captured
+#                 m.aux['captures'] = [Capture(m.dest, True)] # add to list of things it captures
+#                 # True indicates it is a necessary capture
+
+#         return moves
+#     return q
+
+# apply a modifier to a piece
+def modify(p, mod):
     def q(board, src):
         moves = p(board, src)
-        for m in moves:
-            m.board = deepcopy(board)
-            m.board.set(m.dest, m.board.get(src))
-            m.board.set(src   , None)
-
-            # see if any captures occur
-            if board.get(m.dest) != None: # something was captured
-                m.aux['captures'] = [(m.dest, True)] # add to list of things it captures
-                # True indicates it is a necessary capture
-
-        return moves
-    return q
+        newmoves = [mod(board, m) for m in moves] # list of lists of moves
+        return [m for n in newmoves for m in n] # flatten newmoves
 
 
 # ban friendly fire
-def nofriendly(m):
+def nofriendly(board, m):
+    if 'captures' not in m.aux: # not a capture; allow
+        return [m] # return unmodified
 
-# either allows or disallows friendly fire
-def friendly(p, allowed):
-    if allowed == True: # then nothing needs to be changed
-        return p
+    for c in m.aux['captures'] # go through captures, remove friendly ones
+        if sameside(board.get(m.src), board.get(c.loc)): # if source piece is friendly with captured location piece, ban
+            if c.necessary: # totally banned
+                return []
+            else: # undo capture
+                m.board.set(c.loc, board.get(c.loc))
+
+    # return move with all unnecessary friendly captures filtered out
+    return [m]
+
+# # either allows or disallows friendly fire
+# def friendly(p, allowed):
+#     if allowed == True: # then nothing needs to be changed
+#         return p
 
     
-    def q(board, src):
-        moves = p(board, src)
-        # filter out ones where we capture our own piece
-        for m in moves:
-            if 'captures' not in m.aux: # nothing gets captured
+#     def q(board, src):
+#         moves = p(board, src)
+#         # filter out ones where we capture our own piece
+#         for m in moves:
+#             if 'captures' not in m.aux: # nothing gets captured
                 
 
 

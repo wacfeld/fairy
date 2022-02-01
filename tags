@@ -7,6 +7,7 @@
 A	pieces.py	/^A = makeleaper(2,2) # alfil$/;"	v
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
 Board	objects.py	/^class Board:$/;"	c
+Capture	objects.py	/^class Capture:$/;"	c
 Circle	graphics.py	/^class Circle(Oval):$/;"	c
 D	pieces.py	/^D = makeleaper(0,2) # dabbaba$/;"	v
 DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	v
@@ -47,6 +48,7 @@ __init__	graphics.py	/^    def __init__(self, title="Graphics Window",$/;"	m	cla
 __init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/;"	m	class:Transform
 __init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
 __init__	objects.py	/^    def __init__(self):$/;"	m	class:Square
+__init__	objects.py	/^    def __init__(self, loc=None, necessary=None):$/;"	m	class:Capture
 __init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):$/;"	m	class:Move
 __init__	objects.py	/^    def __init__(self, width=None, height=None): # init with board created for us$/;"	m	class:Board
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
@@ -95,7 +97,6 @@ colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # b
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
-friendly	moves.py	/^def friendly(p, allowed):$/;"	f
 get	objects.py	/^    def get(self, loc):$/;"	m	class:Board
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Image
@@ -132,10 +133,11 @@ locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
+modify	moves.py	/^def modify(p, mod):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
-nofriendly	moves.py	/^def nofriendly(m):$/;"	f
-nowrap	moves.py	/^def nowrap(p):$/;"	f
+nofriendly	moves.py	/^def nofriendly(board, m):$/;"	f
+nowrap	moves.py	/^def nowrap(board, m):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleaper
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
@@ -144,11 +146,9 @@ plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	clas
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
 protoleap	moves.py	/^def protoleap(a,b):$/;"	f
-q	moves.py	/^    def q(board, src):$/;"	f	function:friendly
-q	moves.py	/^    def q(board, src):$/;"	f	function:nowrap
-q	moves.py	/^    def q(board, src):$/;"	f	function:replace
+q	moves.py	/^    def q(board, src):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
-replace	moves.py	/^def replace(p):$/;"	f
+replace	moves.py	/^def replace(board, m):$/;"	f
 sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
 screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform

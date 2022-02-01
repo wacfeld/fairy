@@ -137,3 +137,11 @@ i.e. a function similar to non-wrap must be builtin to every Move, i believe
 so: there are two types of modifiers
 one makes side effects occur ("map", however not necessarily one-to-one)
 one determines if such a move is legal ("filter")
+
+however, the filter is strange:
+sometimes we can let a move through, but have to change it (e.x. stop friendly capture by withdrawer)
+so this filter is also a map
+it returns [] if the move is illegal,
+and [modifiedmove] if it has to be modified
+and [move] if it can be let through
+so everything is a map

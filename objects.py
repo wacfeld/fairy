@@ -39,6 +39,11 @@ class Board:
         rank = loc[1]
         return (0 <= file < self.width) and (0 <= rank < self.height)
 
+class Capture:
+    def __init__(self, loc=None, necessary=None):
+        self.loc = loc
+        self.necessary = necessary
+
 class Move:
     def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):
         self.src   = src   # where we start
