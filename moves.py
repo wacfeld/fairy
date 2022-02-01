@@ -1,4 +1,4 @@
-import copy
+from copy import deepcopy
 from objects import *
 import main
 
@@ -31,6 +31,33 @@ def protoleap(a,b):
 
 # no cylindrical wrapping
 def nowrap(p):
+    def q(board, src):
+        moves = p(board, src)
+        moves = list(filter(board.inbounds, moves))
+    return q
+
+# simplest move. implies capture by replacement and leaping, regardless of enemy or friend. simply overwrites dest with src, then deletes src
+def replace(p):
+    def q(board, src):
+        moves = p(board, src)
+        for m in moves:
+            m.board = deepcopy(board)
+            m.board.set(m.dest, m.board.get(src))
+            m.board.set(src   , None)
+        return moves
+    return q
+
+
+# # either allows or disallows friendly fire
+# def friendly(p, allowed):
+#     if allowed == True: # then nothing needs to be changed
+#         return p
+
+#     def q(board, src):
+#         moves = p(board, src)
+#         # filter out ones where we capture our own piece
+
+
 
 # ex. makeleaper(2,1) is a knight
 def makeleaper(a, b):
@@ -43,8 +70,13 @@ def makeleaper(a, b):
         moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
 
+    # get rid of out of bounds, cylindrical banned
     p2 = nowrap(p1)
-
+    # move and capture by replacement
+    p3 = replace(p2)
+    # ban friendly fire
+    
+    # capture by replacement, enemy pieces only
 
         # moves = {} # keys are locs, entries are boards
         

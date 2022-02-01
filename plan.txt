@@ -4,7 +4,7 @@
 # moves are in the form of a pair of a location, and the resulting board
 ^^^ partially outdated
 
-- [x] leapers
+- [ ] leapers
 - [ ] riders
 - [ ] not putting the king in check (royalty)
 
@@ -115,3 +115,15 @@ that is probably something that can be built into the aux
 
 
 it should not be a tuple, it should be an object
+
+how to implement shooting pieces? it is then hard to tell what is friendly fire or not, because that is based on destination
+solution: implement the captured location(s) in aux, separate it from src and dest
+this solves the same problem for withdrawers, etc.
+but then say a pincer tries to capture two pieces, one is friendly, one is enemy
+and only the enemy gets captured, obviously
+but the move itself is not banned!
+on the contrary, if an ortodox knight is trying to capture a friendly piece, that move is banned altogether
+perhaps we need a new function which takes a look at the modifications made to aux, and decides whether we can keep going like this, or must stop
+
+also my implementation of Move and leapers forgets about the modification functions that will be needed for riders (cylindrical, non, etc.)
+i.e. a function similar to non-wrap must be builtin to every Move, i believe

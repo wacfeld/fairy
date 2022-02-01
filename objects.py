@@ -33,7 +33,6 @@ class Board:
         rank = loc[1]
         self.board[file][rank] = piece
 
-
     # check if coordinates are in bounds of board
     def inbounds(self, loc):
         file = loc[0]

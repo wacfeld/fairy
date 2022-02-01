@@ -142,7 +142,10 @@ plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	clas
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
 protoleap	moves.py	/^def protoleap(a,b):$/;"	f
+q	moves.py	/^    def q(board, src):$/;"	f	function:nowrap
+q	moves.py	/^    def q(board, src):$/;"	f	function:replace
 readfen	main.py	/^def readfen(fen):$/;"	f
+replace	moves.py	/^def replace(p):$/;"	f
 sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
 screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform
