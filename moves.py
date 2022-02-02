@@ -117,11 +117,14 @@ def makeleapgen(a, b):
         # turn into list of Moves
         moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
+    return p1
 
 
 # ex. makeleaper(2,1) is a knight
 def makeleaper(a, b):
     p1 = makeleapgen(a,b)
+    
+    extmods = [nowrap] # simple leapers cannot leave/wrap around the board
 
     # get rid of out of bounds, cylindrical banned
     p2 = modify(p1, nowrap)

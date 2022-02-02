@@ -202,3 +202,26 @@ this is alright as if we want to differentiate, we can simply make separate piec
 extmods are passed to the extend modifier, of course
 please do not pass extend to extend as an extmod
 (or do, and achieve what you want through roundabout recursion)
+
+consider a destructive rose
+it has two ways to get to any point other than the source
+and destroys everything in its path to get there
+the directions are different
+the destination is the same
+that is two separate moves
+that would be difficult for the GUI to implement
+however it's doable
+just have a popup if you click a destination with multiple options
+with some extra highlights
+anyway my point is we will have to remove duplicates and to do that we have to compare literally everything
+no, not that
+only the boards, we have to compare, because ultimately the end result is in the boards
+... but then we would have to wait for all the other modifiers to do that
+so instead we just have to look at the unmodified move itself
+including aux, dir, src, dest
+but the question is, can separate leap moves extend into identical moves?
+or how about this: we just let them exist.
+if dest is different, then obviously they are distinct
+if dest is same, then when it comes to chosing a move, we only show a popup if the resulting *boards* are different
+otherwise they are just duplicates that are allowed to exist
+that way we can have extend() be a regular modifier function that can be applied through modify(), operating on one move at a time
