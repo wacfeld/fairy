@@ -4,7 +4,7 @@
 # moves are in the form of a pair of a location, and the resulting board
 ^^^ partially outdated
 
-- [ ] leapers
+- [x] leapers
 - [ ] riders
 - [ ] not putting the king in check (royalty)
 
@@ -149,3 +149,56 @@ so everything is a map
 under this scheme it is impossible to turn, say, a rider, directly into a cylindrical piece. to do this we would have to be able to reach in and change the coordinate modifier function, which is currently nested within many functions.
 this would require a generalized form of move represented as, say, a list of modifiers, that get applied in order to create the desired function
 this should not be too hard to implement afterward, so right now i will just go ahead without doing that
+
+perhaps riders and leapers can be generalized into similar forms
+we need a *generator*
+that is what the protoleaper is
+well, not exactly
+the protoleaper is independent of position
+the generator for leapers includes nowrap, hence it must take into account position
+the generator:
+    generates destinations
+    (removes duplicates)
+rider generators, obviously, are an extension of leaper generators, but they follow the same concept
+the reason this matters is because nowrap, i think
+well, it doesn't matter, but it might be useful
+to get a rider from a leaper:
+    we take everything generator by the leaper generator (a list of Moves, only containing src, dest, dir)
+    we apply all necessary modifiers (ex. nowrap) to these moves
+        some moves may be eliminated as a result
+    then!!! to extend this leaper, we apply an *extension* modifier, which takes all the moves, and extends them in the given direction
+    we alternate between modifiers and extension until our list of moves stops growing (duplicates/out-of-bounds/etc. only)
+    this repeated application of the extension can be encapsulated by a "full extension" modifier which hides away all these details
+    then, we do the necessary capture, nofriendly, nohop modifiers to make it a proper rider
+so everything can still be separated into functions
+of course, this method is slow and impractical, but it is general
+to run a chess engine we would want a more direct, less general implementation
+but that is not the current goal
+we STILL cannot simply apply makerider(leaper) to get what we want, but we are close
+now all we need to do is go from functions to lists of compounded functions,
+and then to make a rider we simply insert it at the necessary step
+protoleaper -> leap generator -> bounds modifiers -> modifiers
+protoleaper -> leap generator -> (bounds modifiers <-> extension) -> modifiers
+i.e.
+protoleaper -> leap generator -> full extension -> modifiers
+something like that.
+then, perhaps we should build the bounds modifiers into the moves, as i thought
+"extmod" or something, for when you want to extend
+is that a good way to go about it?
+the first leap itself should be an extension
+but an extension from what?
+moving nowhere is not a valid move
+and we cannot simply ban moving to your current location, as that is valid for roses, and cylindrical pieces, most likely
+and also we cannot split the zero direction into many
+i guess we cannot do that then
+renaming protoleap to leapoffs, for clarity
+
+got it:
+we have a mod function "extend" which can perform both zero extension (leaper), fixed amount of extension (used to to indefinite), and indefinite (rider) extension
+this function calls all the extmods as passed to it.
+then i suppose extmods should NOT be stored in the moves
+we just have to assume that all directions get the same mods
+this is alright as if we want to differentiate, we can simply make separate pieces and them combine them
+extmods are passed to the extend modifier, of course
+please do not pass extend to extend as an extmod
+(or do, and achieve what you want through roundabout recursion)

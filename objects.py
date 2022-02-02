@@ -53,7 +53,6 @@ class Move:
         self.dir   = dir   # how we get there
         self.board = board # result & side effects
         if aux != None:
-            self.aux = aux
+            self.aux = aux # any other information about how we move (a dictionary)
         else:
             self.aux = {}
-        # self.aux   = aux   # any other information about how we move (a dictionary)

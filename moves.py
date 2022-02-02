@@ -12,7 +12,7 @@ def sameside(p1, p2):
 # simply returns  a list of location offsets that a leaper can move by
 # makeleaper turns this into a piece (a function) which captures by replacement, stays within board bounds, etc.
 # this facilitates the creation of riders, cylindrical pieces, etc.
-def protoleap(a,b):
+def leapoffs(a,b):
     offsets = [
             (-a, -b),
             (-a, +b),
@@ -102,22 +102,26 @@ def nofriendly(board, m):
 #         # filter out ones where we capture our own piece
 #         for m in moves:
 #             if 'captures' not in m.aux: # nothing gets captured
-                
+
 # add two locations coordinate wise
 def addlocs(a, b):
     return (a[0] + b[0], a[1] + b[1])
 
-
-# ex. makeleaper(2,1) is a knight
-def makeleaper(a, b):
-    # p1 leaps from src to dest without regard for captures, or illegal coordinates
+# make leaper generator, used by both leapers and riders
+def makeleapgen(a, b):
+    # sets up move destinations, accounting for possible extension by riders
     def p1(board, src):
-        # get all candidate moves (8 total, not necessarily unique)
-        offsets = protoleap(a,b)
+        # get all offsets (8 total, not necessarily unique, not necessarily in bounds)
+        offsets = leapoffs(a,b)
 
         # turn into list of Moves
         moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
+
+
+# ex. makeleaper(2,1) is a knight
+def makeleaper(a, b):
+    p1 = makeleapgen(a,b)
 
     # get rid of out of bounds, cylindrical banned
     p2 = modify(p1, nowrap)

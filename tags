@@ -128,24 +128,25 @@ inbounds	objects.py	/^    def inbounds(self, loc):$/;"	m	class:Board
 init	drawer.py	/^def init(width, height):$/;"	f
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
+leapoffs	moves.py	/^def leapoffs(a,b):$/;"	f
 locdelpiece	drawer.py	/^def locdelpiece(l):$/;"	f
 locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
+makeleapgen	moves.py	/^def makeleapgen(a, b):$/;"	f
 modify	moves.py	/^def modify(p, mod):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
 nofriendly	moves.py	/^def nofriendly(board, m):$/;"	f
 nowrap	moves.py	/^def nowrap(board, m):$/;"	f
-p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleaper
+p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
-protoleap	moves.py	/^def protoleap(a,b):$/;"	f
 q	moves.py	/^    def q(board, src):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
 replace	moves.py	/^def replace(board, m):$/;"	f
