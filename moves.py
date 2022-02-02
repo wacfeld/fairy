@@ -71,9 +71,19 @@ def replace(board, m):
 def modify(p, mod):
     def q(board, src):
         moves = p(board, src)
-        newmoves = [mod(board, m) for m in moves] # list of lists of moves
-        return [m for n in newmoves for m in n] # flatten newmoves
+        newmoves = expcontr(board, moves, mod)
+        return newmoves
+        # newmoves = [mod(board, m) for m in moves] # list of lists of moves
+        # return [m for n in newmoves for m in n] # flatten newmoves
     return q
+
+
+# expand and contract. we expand l (list of moves) into a list of lits of moves via f: board, move -> listof moves
+# and then flatten (contract) it
+def expcontr(board, l, f):
+    exp = [f(board, m) for m in l]
+    newl = [m for e in exp for m in e]
+    return newl
 
 
 # ban friendly fire
@@ -107,6 +117,7 @@ def nofriendly(board, m):
 def addlocs(a, b):
     return (a[0] + b[0], a[1] + b[1])
 
+
 # make leaper generator, used by both leapers and riders
 def makeleapgen(a, b):
     # sets up move destinations, accounting for possible extension by riders
@@ -118,6 +129,34 @@ def makeleapgen(a, b):
         moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
     return p1
+
+
+# compound a list of mods (one after another)
+# ex. compmod(board, [replace, nowrap]) is a function that calls replace, then nowrap, on a move
+def compmod(board, lmod):
+    def res(board, m):
+        moves = [m]
+        for mod in lmod: # apply left to right
+            moves = expcontr(board, moves, mod)
+        return moves
+    return res
+
+
+# extend a directioned move
+def extend(board, m, extmods, amt):
+    # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
+    moves = []
+    newmoves = [m] # calling the extension on moves every single time seems bad, so we will only operate on the newest ones
+    # ^ this is guaranteed to work because we always use the same mods, so reapplying on old moves will only produce duplicates
+    compext = compmod(board, extmods) # compound the extmods into one function
+    while newmoves != []: # while new moves still exist
+        newnewmoves = expcontr(board, newmoves, compext)
+        moves += newmoves
+        # gotta check for duplicates. write a function that just checks all attributes of Move, compare with another Move
+        # aux needs to be checked as well!
+        # we actually have to check for duplicates here, contrary to what i said earlier, because riders/indefinite extensions need to know when to stop
+        # or, perhaps, we could send along some function which tests for equality
+        # i'm not sure
 
 
 # ex. makeleaper(2,1) is a knight

@@ -94,8 +94,11 @@ clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
 close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
 colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white$/;"	v
+compmod	moves.py	/^def compmod(board, lmod):$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
+expcontr	moves.py	/^def expcontr(board, l, f):$/;"	f
+extend	moves.py	/^def extend(board, m, extmods, amt):$/;"	f
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
 get	objects.py	/^    def get(self, loc):$/;"	m	class:Board
 getAnchor	graphics.py	/^    def getAnchor(self):$/;"	m	class:Entry
@@ -150,6 +153,7 @@ promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:G
 q	moves.py	/^    def q(board, src):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
 replace	moves.py	/^def replace(board, m):$/;"	f
+res	moves.py	/^    def res(board, m):$/;"	f	function:compmod
 sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
 screen	graphics.py	/^    def screen(self,x,y):$/;"	m	class:Transform

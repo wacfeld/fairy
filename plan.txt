@@ -225,3 +225,6 @@ if dest is different, then obviously they are distinct
 if dest is same, then when it comes to chosing a move, we only show a popup if the resulting *boards* are different
 otherwise they are just duplicates that are allowed to exist
 that way we can have extend() be a regular modifier function that can be applied through modify(), operating on one move at a time
+
+i mean, i wasn't wrong that the leapgen IS just an extension of 0. it just produces many children, instead of 1 or 2 or 0
+the problem is that 0 itself is not allowed
