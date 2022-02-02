@@ -45,9 +45,15 @@ class Capture:
         self.necessary = necessary
 
 class Move:
-    def __init__(self, src=None, dest=None, dir=None, board=None, aux={}):
+    # def __init__(self, src=None, dest=None, dir=None, board=None, aux={}):
+    # ^^^ this breaks because the dictionary gets shared, like a pointer, bafflingly
+    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):
         self.src   = src   # where we start
         self.dest  = dest  # where we end up
         self.dir   = dir   # how we get there
         self.board = board # result & side effects
-        self.aux   = aux   # any other information about how we move (a dictionary)
+        if aux != None:
+            self.aux = aux
+        else:
+            self.aux = {}
+        # self.aux   = aux   # any other information about how we move (a dictionary)

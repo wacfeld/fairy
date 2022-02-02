@@ -45,6 +45,10 @@ def replace(board, m):
     m.board = deepcopy(board)
     m.board.set(m.dest, m.board.get(m.src))
     m.board.set(m.src, None)
+    # see if any captures occur
+    if board.get(m.dest) != None: # something was captured
+        m.aux['captures'] = [Capture(m.dest, True)] # add to list of things it captures
+        # True indicates it is a necessary capture
     return [m]
 
 # def replace(p):
@@ -117,13 +121,10 @@ def makeleaper(a, b):
 
     # get rid of out of bounds, cylindrical banned
     p2 = modify(p1, nowrap)
-    # print(p2)
     # move and capture by replacement
     p3 = modify(p2, replace)
-    # print(p3)
     # ban friendly fire
     p4 = modify(p3, nofriendly)
-    # print(p4)
 
     return p4
     
