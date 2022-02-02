@@ -49,7 +49,7 @@ __init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/
 __init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
 __init__	objects.py	/^    def __init__(self):$/;"	m	class:Square
 __init__	objects.py	/^    def __init__(self, loc=None, necessary=None):$/;"	m	class:Capture
-__init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):$/;"	m	class:Move
+__init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux={}):$/;"	m	class:Move
 __init__	objects.py	/^    def __init__(self, width=None, height=None): # init with board created for us$/;"	m	class:Board
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Entry	file:
@@ -79,7 +79,7 @@ _onClick	graphics.py	/^    def _onClick(self, e):$/;"	m	class:GraphWin
 _reconfig	graphics.py	/^    def _reconfig(self, option, setting):$/;"	m	class:GraphicsObject
 _root	graphics.py	/^_root = tk.Tk()$/;"	v
 _setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
-addlocs	main.py	/^def addlocs(a, b):$/;"	f
+addlocs	moves.py	/^def addlocs(a, b):$/;"	f
 board	drawer.py	/^board  = None$/;"	v
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle

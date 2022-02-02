@@ -7,9 +7,6 @@ from objects import *
 height = 8
 width = 8
 
-# add two locations coordinate wise
-def addlocs(a, b):
-    return (a[0] + b[0], a[1] + b[1])
 
 # read FEN, set up board accordingly, and possibly other things (side to move, etc.)
 def readfen(fen):
@@ -32,33 +29,36 @@ def readfen(fen):
     return board
 
 def play(board, side): # get moves from alternating sides
-    N = pieces.D
+    drawer.update(board)
+    N = pieces.N
     while True:
         # get target piece
-        s1 = drawer.getmousesquare()
-        if s1.piece == None:
+        l1 = drawer.getmousesquare().getloc()
+        if board.get(l1) == None:
             continue
 
         # highlight
-        drawer.hlsquare(s1)
+        drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        m = N(board, s1.getloc())
+        moves = N(board, l1)
         # print(moves)
 
-        # highlight all possible moves
-        for l in m:
-            drawer.hlloc(l)
+        # highlight all possible destinations
+        for m in moves:
+            drawer.hlloc(m.dest)
+
+        destdict = {m.dest:m.board for m in moves} # dictionary mapping destinations to boards
 
         # get target location, check if valid
-        s2 = drawer.getmousesquare()
-        if s2.getloc() in m:
-            board = m[s2.getloc()]
+        l2 = drawer.getmousesquare().getloc()
+        if l2 in destdict: # legal move
+            board = destdict[l2]
             drawer.update(board)
         
         # undo all highlight
-        drawer.unhlsquare(s1)
-        for l in m:
+        drawer.unhlloc(l1)
+        for l in destdict:
             drawer.unhlloc(l)
 
 def main():
@@ -66,7 +66,6 @@ def main():
     standard = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 
     board = readfen(standard)
-    drawer.update(board)
     play(board, 1)
 
 

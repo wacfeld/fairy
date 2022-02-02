@@ -45,7 +45,7 @@ class Capture:
         self.necessary = necessary
 
 class Move:
-    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):
+    def __init__(self, src=None, dest=None, dir=None, board=None, aux={}):
         self.src   = src   # where we start
         self.dest  = dest  # where we end up
         self.dir   = dir   # how we get there

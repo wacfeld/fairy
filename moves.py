@@ -1,6 +1,5 @@
 from copy import deepcopy
 from objects import *
-import main
 
 
 # i wanted to do this in lisp but i couldn't figure out how to integrate that with python, so here we are
@@ -44,8 +43,8 @@ def nowrap(board, m):
 # simplest move. implies capture by replacement and leaping, regardless of enemy or friend. simply overwrites dest with src, then deletes src
 def replace(board, m):
     m.board = deepcopy(board)
-    m.board.set(m.dest, m.board.get(src))
-    m.board.set(src, None)
+    m.board.set(m.dest, m.board.get(m.src))
+    m.board.set(m.src, None)
     return [m]
 
 # def replace(p):
@@ -70,6 +69,7 @@ def modify(p, mod):
         moves = p(board, src)
         newmoves = [mod(board, m) for m in moves] # list of lists of moves
         return [m for n in newmoves for m in n] # flatten newmoves
+    return q
 
 
 # ban friendly fire
@@ -77,7 +77,7 @@ def nofriendly(board, m):
     if 'captures' not in m.aux: # not a capture; allow
         return [m] # return unmodified
 
-    for c in m.aux['captures'] # go through captures, remove friendly ones
+    for c in m.aux['captures']: # go through captures, remove friendly ones
         if sameside(board.get(m.src), board.get(c.loc)): # if source piece is friendly with captured location piece, ban
             if c.necessary: # totally banned
                 return []
@@ -99,6 +99,9 @@ def nofriendly(board, m):
 #         for m in moves:
 #             if 'captures' not in m.aux: # nothing gets captured
                 
+# add two locations coordinate wise
+def addlocs(a, b):
+    return (a[0] + b[0], a[1] + b[1])
 
 
 # ex. makeleaper(2,1) is a knight
@@ -106,17 +109,23 @@ def makeleaper(a, b):
     # p1 leaps from src to dest without regard for captures, or illegal coordinates
     def p1(board, src):
         # get all candidate moves (8 total, not necessarily unique)
-        offsets = makeleap(a,b)
+        offsets = protoleap(a,b)
 
         # turn into list of Moves
         moves = [Move(src, addlocs(src, o), o) for o in offsets]
         return moves
 
     # get rid of out of bounds, cylindrical banned
-    p2 = nowrap(p1)
+    p2 = modify(p1, nowrap)
+    # print(p2)
     # move and capture by replacement
-    p3 = replace(p2)
+    p3 = modify(p2, replace)
+    # print(p3)
     # ban friendly fire
+    p4 = modify(p3, nofriendly)
+    # print(p4)
+
+    return p4
     
     # capture by replacement, enemy pieces only
 

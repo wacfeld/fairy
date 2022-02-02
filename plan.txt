@@ -145,3 +145,7 @@ it returns [] if the move is illegal,
 and [modifiedmove] if it has to be modified
 and [move] if it can be let through
 so everything is a map
+
+under this scheme it is impossible to turn, say, a rider, directly into a cylindrical piece. to do this we would have to be able to reach in and change the coordinate modifier function, which is currently nested within many functions.
+this would require a generalized form of move represented as, say, a list of modifiers, that get applied in order to create the desired function
+this should not be too hard to implement afterward, so right now i will just go ahead without doing that
