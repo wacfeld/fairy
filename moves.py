@@ -298,3 +298,10 @@ def makeleaper(a, b):
 
         # return moves
     return p
+
+def compound(*pieces): # e.x. Q = compound(R, B)
+    def q(board, src):
+        movelists = [p(board, src) for p in pieces] # get moves for each piece
+        moves = [m for list in movelists for m in list] # flatten
+        return moves
+    return q

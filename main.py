@@ -28,9 +28,25 @@ def readfen(fen):
 
     return board
 
+piecemap = {
+        'k': pieces.K,
+        'q': pieces.NQ,
+        'r': pieces.R,
+        'b': pieces.B,
+        'n': pieces.NN,
+        'K': pieces.K,
+        'Q': pieces.NQ,
+        'R': pieces.R,
+        'B': pieces.B,
+        'N': pieces.NN,
+        'p': pieces.R, # temporary!
+        'P': pieces.R, # temporary!
+        }
+
+
 def play(board, side): # get moves from alternating sides
+    # TODO implement one-square multiple moves thing. will matter for cylindrical moves etc.
     drawer.update(board)
-    N = pieces.B
     while True:
         # get target piece
         l1 = drawer.getmousesquare().getloc()
@@ -41,7 +57,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        moves = N(board, l1)
+        piece = piecemap[board.get(l1)]
+        moves = piece(board, l1)
         # print(moves)
 
         # highlight all possible destinations

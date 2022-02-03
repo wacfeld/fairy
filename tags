@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 A	pieces.py	/^A = makeleaper(2,2) # alfil$/;"	v
-B	pieces.py	/^B = makerider(1, 1) # bishop!!!$/;"	v
+B	pieces.py	/^B = makerider(1, 1) # bishop$/;"	v
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
 Board	objects.py	/^class Board:$/;"	c
 Capture	objects.py	/^class Capture:$/;"	c
@@ -19,13 +19,23 @@ GraphWin	graphics.py	/^class GraphWin(tk.Canvas):$/;"	c
 GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
 GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
 Image	graphics.py	/^class Image(GraphicsObject):$/;"	c
+K	pieces.py	/^K = compound(F, W) # king$/;"	v
+KB	pieces.py	/^KB = compound(B, K) # crowned bishop (dragon horse)$/;"	v
+KR	pieces.py	/^KR = compound(R, K) # crowned rook (dragon king)$/;"	v
 Line	graphics.py	/^class Line(_BBox):$/;"	c
 Move	objects.py	/^class Move:$/;"	c
 N	pieces.py	/^N = makeleaper(2,1) # knight$/;"	v
+NB	pieces.py	/^NB = compound(B, N) # knighted bishop (princess\/archbishop)$/;"	v
+NK	pieces.py	/^NK = compound(K, N) # knighted king$/;"	v
+NN	pieces.py	/^NN = makerider(2,1) # nightrider$/;"	v
+NQ	pieces.py	/^NQ = compound(Q, N) # knighted queen (amazon)$/;"	v
+NR	pieces.py	/^NR = compound(R, N) # knighted rook (empress\/chancellor)$/;"	v
 OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
 Oval	graphics.py	/^class Oval(_BBox):$/;"	c
 Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
 Polygon	graphics.py	/^class Polygon(GraphicsObject):$/;"	c
+Q	pieces.py	/^Q = compound(B, R) # queen$/;"	v
+R	pieces.py	/^R = makerider(0,1) # rook$/;"	v
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
 Square	objects.py	/^class Square:$/;"	c
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
@@ -96,6 +106,7 @@ close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
 colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white$/;"	v
 compmod	moves.py	/^def compmod(board, lmod):$/;"	f
+compound	moves.py	/^def compound(*pieces): # e.x. Q = compound(R, B)$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 expcontr	moves.py	/^def expcontr(board, l, f):$/;"	f
@@ -149,12 +160,14 @@ nohop	moves.py	/^def nohop(board, m):$/;"	f
 noretrace	moves.py	/^def noretrace(board, m):$/;"	f
 nowrap	moves.py	/^def nowrap(board, m):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen
+piecemap	main.py	/^piecemap = {$/;"	v
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
 plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
+q	moves.py	/^    def q(board, src):$/;"	f	function:compound
 q	moves.py	/^    def q(board, src):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
 replace	moves.py	/^def replace(board, m):$/;"	f

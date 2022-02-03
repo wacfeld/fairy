@@ -5,8 +5,50 @@
 ^^^ partially outdated
 
 - [x] leapers
-- [ ] riders
-- [ ] not putting the king in check (royalty)
+- [x] riders
+- [ ] pawns
+    - [ ] promotion
+    - [ ] initial moves
+- [ ] en passant, castling
+- [ ] check, checkmate, (royalty) illegal moves
+- [ ] hoppers
+- [ ] bent riders (one moveset after another, influencing each other possibly)
+- [ ] circular riders
+- [ ] crooked riders
+- [ ] ranged riders
+    - [ ] min
+    - [x] max
+        - (through amt, i think)
+- [ ] checker
+- [ ] hoppers
+    - [ ] cannons
+    - [ ] locusts
+    - [ ] grasshoppers
+- [ ] marines
+- [x] cylindrical
+- [ ] ski, skip, slip riders
+- [ ] falcon
+- [ ] horse
+- [ ] lion (twice moving king)
+- [ ] fire demon (passive effect)
+- [ ] joker
+- [ ] shooting pieces
+- [ ] iron piece (cannot be captured)
+
+variants to implement
+- [ ] baroque
+    - [ ] pincer
+    - [ ] withdrawer
+    - [ ] immobiliser
+    - [ ] long-leaper/leaper
+    - [ ] coordinator
+    - [ ] chameleon
+- [ ] alice chess, for the confusion
+- [ ] basilisk chess?
+- [ ] marseillais chess
+- [x] cylindrical
+
+- [ ] make compatible or semi-compatible with betza notation or your own notation
 
 - [x] make a chessboard
 - [x] figure out where clicks land
@@ -14,11 +56,12 @@
 - [x] FEN -> board
 - [ ] board -> FEN
 - [x] move pieces on the chessboard
-- [ ] get legal moves on chessboard, based on arbitrary fairy chess move properties
+- [x] get legal moves on chessboard, based on arbitrary fairy chess move properties
 - [ ] determine check and checkmate
 - [ ] make an engine that's good
-- [ ] make object oriented
+- [x] make object oriented
 - [ ] make readfen() call drawer.update()
+- [ ] streamline the modification process and piece creation process. lists of modifications, leapers->riders more direct, etc.
 
 a proto-piece is simply a list of offsets, independent of location and surroundings of a piece
 
