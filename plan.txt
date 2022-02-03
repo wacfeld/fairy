@@ -286,3 +286,14 @@ really you can dream up arbitrarily complex paths that a piece can take
 we just need something that deals with all the sane ones
 
 the function extend() will trust that the modifiers will eventually stop creating moves
+
+
+need a way to categorize the different modifiers
+at the moment to make a leaper, we use:
+    nowrap
+    replace
+    nofriendly
+to make a rider:
+
+oh right, we use extend for leapers too, that's why!
+then we don't need to categorize

@@ -44,8 +44,9 @@ def ride(board, m, pathfinder):
     newdirs = pathfinder(newdir) # directions determined by pathfinder, can be 0, 1, etc.
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux) for nd in newdirs] # create new moves by adding generated directions onto current dest
 
-    for nm in newmoves: # append dest to paths
-        nm.aux['path'].append(nm.dest)
+    # we don't modify path yet, we wait for extend() to do that accounting for extmods
+    # for nm in newmoves: # append dest to paths
+    #     nm.aux['path'].append(nm.dest)
     return newmoves
 
 
@@ -178,7 +179,7 @@ def compmod(board, lmod):
     return res
 
 
-# extend a directioned move
+# extend a directioned move until we cannot anymore
 def extend(board, m, extmods, amt, pathfinder):
     # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
 
@@ -187,27 +188,47 @@ def extend(board, m, extmods, amt, pathfinder):
     newmoves = [m] # calling the extension on moves every single time seems bad, so we will only operate on the newest ones
     # ^ this is guaranteed to work because we always use the same mods, so reapplying on old moves will only produce duplicates
     compext = compmod(board, extmods) # compound the extmods into one function
-    while newmoves != []: # while new moves still exist
+    i = 0
+    # i increments until reaches amt
+    # when amt is negative, it continues indefinitely (fullextend)
+    while newmoves != [] and i != amt: # while new moves still exist
         # the ride() modifier is separated from extmods
-        # because ride() does replaces, and must be stored in newnewmoves
+        # because ride() replaces, and must be stored in newnewmoves
         newmoves = expcontr(board, newmoves, compext) # perform the given modifiers on the moves
+        moves += newmoves
         # note how this looping setup ensures that every move, including the original one passed to extend(), gets put through this
+        for nm in newmoves: # add to path only after performing necessary modifications, which may include altering nm.dest, or removing altogether
+            nm.aux['path'].append(nm.dest)
+
+        i += 1
+        if i == amt: # right before ending, don't need to do the rest of this iteration
+            # perhaps this is a kludge, but it allows us to not specify pathfinder for leapers (amt=1)
+            continue
         ridemod = lambda a, b: ride(a, b, pathfinder) # ride() itself is not a modifier, it has an extra argument
-        newnewmoves = expcontr(board, newmoves, ridemod)
+        newnewmoves = expcontr(board, newmoves, ridemod) # extend by 1
 
         # shift back
-        moves += newmoves
         newmoves = newnewmoves
+
+    return moves
+
+
+# def makerider(a, b):
+#     p1 = makeleapgen(a,b) # leap generator is basis for both leapers and riders
+
 
 
 # ex. makeleaper(2,1) is a knight
 def makeleaper(a, b):
     p1 = makeleapgen(a,b)
     
-    extmods = [nowrap] # simple leapers cannot leave/wrap around the board
+    # p2 = modify(p1, nowrap)
+    extmods = [nowrap] # no going out of bounds
+    extendmod = lambda a, b: extend(a, b, extmods, 1, None)
+    # do not conflate extmods with extendmod
+    p2 = modify(p1, extendmod)
+    print(p2)
 
-    # get rid of out of bounds, cylindrical banned
-    p2 = modify(p1, nowrap)
     # move and capture by replacement
     p3 = modify(p2, replace)
     # ban friendly fire

@@ -30,7 +30,7 @@ def readfen(fen):
 
 def play(board, side): # get moves from alternating sides
     drawer.update(board)
-    N = pieces.N
+    N = pieces.W
     while True:
         # get target piece
         l1 = drawer.getmousesquare().getloc()
@@ -42,7 +42,7 @@ def play(board, side): # get moves from alternating sides
 
         # get possible moves based on piece type
         moves = N(board, l1)
-        # print(moves)
+        print(moves)
 
         # highlight all possible destinations
         for m in moves:
