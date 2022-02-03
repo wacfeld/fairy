@@ -34,6 +34,37 @@ def nowrap(board, m):
         return []
     return [m]
 
+
+# basis of a rider. extends outward in given direction and adds to path in the process
+# ride() is NOT an ordinary modifier! it replaces the given m with the next one in the path. it is used in extend()
+def ride(board, m, pathfinder):
+    # pathfinder tells how to derive the next direction(s)
+    # in the case of simple riders it is just the identity function in brackets
+    dir = m.dir
+    newdirs = pathfinder(newdir) # directions determined by pathfinder, can be 0, 1, etc.
+    newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux) for nd in newdirs] # create new moves by adding generated directions onto current dest
+
+    for nm in newmoves: # append dest to paths
+        nm.aux['path'].append(nm.dest)
+    return newmoves
+
+
+# no revisiting the same location in your path with the same direction
+# this is important for, say, cylindrical/circular riders
+def noretrace(board, m):
+    path = m.aux['path']
+    # note that path contains m.dest itself, so we must exclude that
+    for i in range(len(path) - 1):
+        dir = sublocs(path[i+1], path[i])
+        if path[i] == m.dest and dir == m.dir: # both coincide, retracing found
+            return []
+
+    # if m.dest in board.aux['path']:
+    #     return []
+
+    return [m]
+
+
 # def nowrap(p):
 #     def q(board, src):
 #         moves = p(board, src)
@@ -118,6 +149,11 @@ def addlocs(a, b):
     return (a[0] + b[0], a[1] + b[1])
 
 
+# a - b
+def sublocs(a, b):
+    return (a[0] - b[0], a[1] - b[1])
+
+
 # make leaper generator, used by both leapers and riders
 def makeleapgen(a, b):
     # sets up move destinations, accounting for possible extension by riders
@@ -143,20 +179,25 @@ def compmod(board, lmod):
 
 
 # extend a directioned move
-def extend(board, m, extmods, amt):
+def extend(board, m, extmods, amt, pathfinder):
     # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
+
+    m.aux['path'] = [m.dest] # m.src itself is not in the path! however m.dest (and everything in between) is
     moves = []
     newmoves = [m] # calling the extension on moves every single time seems bad, so we will only operate on the newest ones
     # ^ this is guaranteed to work because we always use the same mods, so reapplying on old moves will only produce duplicates
     compext = compmod(board, extmods) # compound the extmods into one function
     while newmoves != []: # while new moves still exist
-        newnewmoves = expcontr(board, newmoves, compext)
+        # the ride() modifier is separated from extmods
+        # because ride() does replaces, and must be stored in newnewmoves
+        newmoves = expcontr(board, newmoves, compext) # perform the given modifiers on the moves
+        # note how this looping setup ensures that every move, including the original one passed to extend(), gets put through this
+        ridemod = lambda a, b: ride(a, b, pathfinder) # ride() itself is not a modifier, it has an extra argument
+        newnewmoves = expcontr(board, newmoves, ridemod)
+
+        # shift back
         moves += newmoves
-        # gotta check for duplicates. write a function that just checks all attributes of Move, compare with another Move
-        # aux needs to be checked as well!
-        # we actually have to check for duplicates here, contrary to what i said earlier, because riders/indefinite extensions need to know when to stop
-        # or, perhaps, we could send along some function which tests for equality
-        # i'm not sure
+        newmoves = newnewmoves
 
 
 # ex. makeleaper(2,1) is a knight

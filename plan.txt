@@ -228,3 +228,61 @@ that way we can have extend() be a regular modifier function that can be applied
 
 i mean, i wasn't wrong that the leapgen IS just an extension of 0. it just produces many children, instead of 1 or 2 or 0
 the problem is that 0 itself is not allowed
+
+# gotta check for duplicates. write a function that just checks all attributes of Move, compare with another Move
+# aux needs to be checked as well!
+# we actually have to check for duplicates here, contrary to what i said earlier, because riders/indefinite extensions need to know when to stop
+# or, perhaps, we could send along some function which tests for equality
+# i'm not sure
+
+the key is to realize that ALL rider moves are distinct if they have different paths
+but that just ruins everything. what if a rider can hop over n things and is cylindrical?
+then we cannot just stop when we reach our source. we have to keep going forever.
+riders must have two stopping conditions:
+e.x. we use up all of some allowed resource (hops, captures, distance, etc.)
+but say this is not satisfied, we cannot keep going in a circle forever
+oh.
+huh?
+well say the condition is distance, then going 8 squares cylindrically and then 4 is the same as going just 4
+say the condition is capture, then you cannot capture more retracing your old path
+etc.
+but what if your path can split? say some piece can ride 8 squares cylindrically horizontally and then the same, vertically?
+that would be confusing as hell
+maybe we can ignore such a possibility. it may not even be possible, unless you are making a chess piece that can move anywhere.
+for example, there are pieces that get to change direction, but then they have a limited distance they can travel
+... but i still want something generalized
+so we should build in a stop condition
+once a move reaches that condition, we end
+how to implement?
+of course we need a function that tests a move, to see if it must stop in its tracks
+it should probably be packaged with extmods
+seeing how some of them are also stop conditions
+oh i know:
+we don't need any extra stop conditions
+whenever you encounter a location already in your path, AND all possible extensions of that coordinate are in your path, you can stop
+actually no, you can't because what if the next coordinate then branches
+we will have to explore the whole entire tree of possibilities then!
+but how??? that will be insane
+and we STILL won't know when to stop
+i guess we will have to figure out stop conditions individually, as there is no universal one
+then for riders, it will be encountering a previously visited square in the same direction?
+or does direction matter?
+let's just make it directionless and we can change it later
+
+there is a piece that requires you to jump over one other piece
+logically there is then a piece that requires you jump over exactly two other pieces
+this is why other modifiers (replace, nohop, etc.) cannot be applied until after all the possible rider moves have been listed
+
+how should we differentiate these modifiers then?
+i don't know
+pathfinding and board modifying?
+perhaps
+
+actually, i think direction is important
+for example, a king with 3 moves a turn
+might want to revisit a square
+
+really you can dream up arbitrarily complex paths that a piece can take
+we just need something that deals with all the sane ones
+
+the function extend() will trust that the modifiers will eventually stop creating moves
