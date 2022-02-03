@@ -8,6 +8,10 @@ pieces are represented by python functions, which output legal moves for a given
 
 all the interesting logic is in moves.py, and the thought processes behind them are in plan.txt
 
+all the resulting pieces are in pieces.py (though you can add more). the piecemap (dictionary mapping letters to pieces) and starting FEN are in main.py, which you can experiment with.
+
+everything is currently a work in progress; i am just experimenting with stuff myself.
+
 dependencies:
 - python3
 - tkinter
