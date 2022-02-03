@@ -22,3 +22,5 @@ NK = compound(K, N) # knighted king
 KB = compound(B, K) # crowned bishop (dragon horse)
 KR = compound(R, K) # crowned rook (dragon king)
 
+
+X = modify(F, lambda a,b: direct(a, b, 'f')) # forward only ferz

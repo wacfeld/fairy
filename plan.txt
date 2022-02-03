@@ -340,3 +340,11 @@ to make a rider:
 
 oh right, we use extend for leapers too, that's why!
 then we don't need to categorize
+
+pawns:
+how to tell if something is an initial move?
+actually this is part of a wider problem
+this requires us to have knowledge of the game over many moves
+well, there is a more logical way to restrict pawns anyways, which is, by rank
+you can move 2 squares if on the 2nd rank from your perspective
+but of course we will run into the initial move dilemma for castling anyway

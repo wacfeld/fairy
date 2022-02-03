@@ -1,5 +1,6 @@
 from copy import deepcopy
 from objects import *
+import math
 
 # from main import height, width
 
@@ -8,7 +9,7 @@ from objects import *
 
 # check if two pieces are on the same side
 def sameside(p1, p2):
-    return (p1.isupper() and p2.isupper()) or (p1.islower() and p2.islower())
+    return (p1.name.isupper() and p2.name.isupper()) or (p1.name.islower() and p2.name.islower())
 
 # simply returns  a list of location offsets that a leaper can move by
 # makeleaper turns this into a piece (a function) which captures by replacement, stays within board bounds, etc.
@@ -64,12 +65,39 @@ def ride(board, m, pathfinder):
     m = deepcopy(m)
     dir = m.dir
     newdirs = pathfinder(dir) # directions determined by pathfinder, can be 0, 1, etc.
-    newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux) for nd in newdirs] # create new moves by adding generated directions onto current dest
+    newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux, piece=m.piece) for nd in newdirs] # create new moves by adding generated directions onto current dest
 
     # we don't modify path yet, we wait for extend() to do that accounting for extmods
     # for nm in newmoves: # append dest to paths
     #     nm.aux['path'].append(nm.dest)
     return newmoves
+
+
+def normalise(d): # normalise a direction tuple
+    # currently only works on orthogonal non-zero directions!
+    if d[1] != 0:
+        return (d[0], d[1]/abs(d[1]))
+    elif d[0] != 0:
+        return (d[0]/abs(d[0]), d[1])
+
+
+# restrict move by direction
+# forward, backward, left, right
+def direct(board, m, dirs):
+    m = deepcopy(m)
+    f = normalise(m.piece.forward) # normal vector telling which way is forward
+    l = (-f[1], f[0]) # left
+    r = (f[1], -f[0]) # right
+    b = (-f[0], -f[1]) # backwards
+    dirdict = {f:'f', l:'l', r:'r', b:'b'} # map tuple directions to characters (format of dirs argument)
+
+    md = m.dir
+    # split into components, normalise, convert through dictionary
+    xcomp = dirdict[normalise((md[0], 0))]
+    ycomp = dirdict[normalise((0, md[1]))]
+    if xcomp not in dirs or ycomp not in dirs: # illegal direction
+        return []
+    return [m]
 
 
 # no revisiting the same location in your path with the same direction
@@ -155,7 +183,7 @@ def nofriendly(board, m):
             if c.necessary: # totally banned
                 return []
             else: # undo capture
-                m.board.set(c.loc, board.get(c.loc))
+                m.board.set(c.loc, deepcopy(board.get(c.loc)))
 
     # return move with all unnecessary friendly captures filtered out
     return [m]
@@ -190,7 +218,7 @@ def makeleapgen(a, b):
         offsets = leapoffs(a,b)
 
         # turn into list of Moves
-        moves = [Move(src, addlocs(src, o), o) for o in offsets]
+        moves = [Move(src, addlocs(src, o), o, piece=board.get(src)) for o in offsets]
         return moves
     return p1
 

@@ -11,6 +11,12 @@ class Square:
     def getloc(self):
         return (self.file, self.rank)
 
+class Piece:
+    def __init__(self, name, forward=None):
+        self.name = name
+        self.forward = forward # which direction is considered forward, in the form of a tuple
+        # at the moment only (n, 0) and (0, n) tuples are supported
+
 class Board:
     def __init__(self, width=None, height=None): # init with board created for us
         # i guess this is how you overload methods in python
@@ -47,7 +53,7 @@ class Capture:
 class Move:
     # def __init__(self, src=None, dest=None, dir=None, board=None, aux={}):
     # ^^^ this breaks because the dictionary gets shared, like a pointer, bafflingly
-    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):
+    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None, piece=None):
         self.src   = src   # where we start
         self.dest  = dest  # where we end up
         self.dir   = dir   # how we get there
@@ -56,3 +62,4 @@ class Move:
             self.aux = aux # any other information about how we move (a dictionary)
         else:
             self.aux = {}
+        self.piece = piece

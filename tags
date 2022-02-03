@@ -32,6 +32,7 @@ NQ	pieces.py	/^NQ = compound(Q, N) # knighted queen (amazon)$/;"	v
 NR	pieces.py	/^NR = compound(R, N) # knighted rook (empress\/chancellor)$/;"	v
 OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
 Oval	graphics.py	/^class Oval(_BBox):$/;"	c
+Piece	objects.py	/^class Piece:$/;"	c
 Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
 Polygon	graphics.py	/^class Polygon(GraphicsObject):$/;"	c
 Q	pieces.py	/^Q = compound(B, R) # queen$/;"	v
@@ -42,6 +43,7 @@ Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
 W	pieces.py	/^W = makeleaper(0,1) # wazir$/;"	v
+X	pieces.py	/^X = modify(F, lambda a,b: direct(a, b, 'f')) # forward only ferz$/;"	v
 _BBox	graphics.py	/^class _BBox(GraphicsObject):$/;"	c
 __autoflush	graphics.py	/^    def __autoflush(self):$/;"	m	class:GraphWin	file:
 __checkOpen	graphics.py	/^    def __checkOpen(self):$/;"	m	class:GraphWin	file:
@@ -60,7 +62,8 @@ __init__	graphics.py	/^    def __init__(self, w, h, xlow, ylow, xhigh, yhigh):$/
 __init__	graphics.py	/^    def __init__(self, x, y):$/;"	m	class:Point
 __init__	objects.py	/^    def __init__(self):$/;"	m	class:Square
 __init__	objects.py	/^    def __init__(self, loc=None, necessary=None):$/;"	m	class:Capture
-__init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None):$/;"	m	class:Move
+__init__	objects.py	/^    def __init__(self, name, forward=None):$/;"	m	class:Piece
+__init__	objects.py	/^    def __init__(self, src=None, dest=None, dir=None, board=None, aux=None, piece=None):$/;"	m	class:Move
 __init__	objects.py	/^    def __init__(self, width=None, height=None): # init with board created for us$/;"	m	class:Board
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Circle	file:
 __str__	graphics.py	/^    def __str__(self):$/;"	m	class:Entry	file:
@@ -108,6 +111,7 @@ colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # b
 compmod	moves.py	/^def compmod(board, lmod):$/;"	f
 compound	moves.py	/^def compound(*pieces): # e.x. Q = compound(R, B)$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
+direct	moves.py	/^def direct(board, m, dirs):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 expcontr	moves.py	/^def expcontr(board, l, f):$/;"	f
 extend	moves.py	/^def extend(board, m, extmods, amt, pathfinder):$/;"	f
@@ -158,6 +162,7 @@ move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
 nofriendly	moves.py	/^def nofriendly(board, m):$/;"	f
 nohop	moves.py	/^def nohop(board, m):$/;"	f
 noretrace	moves.py	/^def noretrace(board, m):$/;"	f
+normalise	moves.py	/^def normalise(d): # normalise a direction tuple$/;"	f
 nowrap	moves.py	/^def nowrap(board, m):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen
 piecemap	main.py	/^piecemap = {$/;"	v

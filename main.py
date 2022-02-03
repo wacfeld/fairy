@@ -23,7 +23,8 @@ def readfen(fen):
             rank -= 1
             file = 0
         else: # put piece
-            board.set((file,rank), c)
+            f = (0,1) if c.isupper() else (0,-1)
+            board.set((file,rank), Piece(c, forward=f))
             file += 1
 
     return board
@@ -57,7 +58,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        piece = piecemap[board.get(l1)]
+        # piece = piecemap[board.get(l1).name]
+        piece = pieces.X
         moves = piece(board, l1)
         # print(moves)
 

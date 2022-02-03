@@ -103,7 +103,7 @@ def update(newboard):
         # keep in mind the different "types" of these boards, one holds Squares (which hold characters), one holds characters
         s = board.get(l)
         newpiece = newboard.get(l)
-        if newpiece == s.piece: # if same, don't need to update this square
+        if newpiece != None and newpiece.name == s.piece: # if same, don't need to update this square
             continue
         # otherwise, update
         placepiece(s, newpiece)
@@ -145,14 +145,14 @@ def placepiece(s, piece):
     cy = rank*squareside + squareside/2
     
     # image path
-    fn = 'sprites/' + spritemap[piece]
+    fn = 'sprites/' + spritemap[piece.name]
 
     # draw image
     curimg = Image(Point(cx, cy), fn)
     curimg.draw(win)
 
     # update Square
-    s.piece = piece
+    s.piece = piece.name
     s.pieceimg = curimg
 
 def locdelpiece(l):
