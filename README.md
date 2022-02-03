@@ -7,3 +7,7 @@ this project lets you play chess with any such pieces, as long as you can define
 pieces are represented by python functions, which output legal moves for a given piece. these functions can be combined in various ways to create new pieces.
 
 all the interesting logic is in moves.py, and the thought processes behind them are in plan.txt
+
+dependencies:
+- python3
+- tkinter
