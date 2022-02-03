@@ -31,18 +31,25 @@ def leapoffs(a,b):
 
 # no cylindrical wrapping
 def nowrap(board, m):
+    m = deepcopy(m)
     if not board.inbounds(m.dest): # not allowed to go out of bounds
         return []
     return [m]
 
 # left-right cylindrical
 def leftrightcyl(board, m):
+    m = deepcopy(m)
     m.dest = (m.dest[0] % board.width, m.dest[1]) # wrap around on the x axis
     return nowrap(board, m) # still have to obey the top-down bounds
 
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)
 def nohop(board, m):
+    # print('hey')
+    # print(m.src)
+    # print(m.dest)
+    # print(m.aux['path'])
+    m = deepcopy(m)
     for l in m.aux['path'][:-1]:
         if board.get(l) != None: # occupied
             return []
@@ -54,6 +61,7 @@ def nohop(board, m):
 def ride(board, m, pathfinder):
     # pathfinder tells how to derive the next direction(s)
     # in the case of simple riders it is just the identity function in brackets
+    m = deepcopy(m)
     dir = m.dir
     newdirs = pathfinder(dir) # directions determined by pathfinder, can be 0, 1, etc.
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux) for nd in newdirs] # create new moves by adding generated directions onto current dest
@@ -67,6 +75,7 @@ def ride(board, m, pathfinder):
 # no revisiting the same location in your path with the same direction
 # this is important for, say, cylindrical/circular riders
 def noretrace(board, m):
+    m = deepcopy(m)
     path = m.aux['path']
     # note that path contains m.dest itself, so we must exclude that
     for i in range(len(path) - 1):
@@ -88,6 +97,8 @@ def noretrace(board, m):
 
 # simplest move. implies capture by replacement and leaping, regardless of enemy or friend. simply overwrites dest with src, then deletes src
 def replace(board, m):
+    m = deepcopy(m)
+
     m.board = deepcopy(board)
     m.board.set(m.dest, m.board.get(m.src))
     m.board.set(m.src, None)
@@ -134,6 +145,8 @@ def expcontr(board, l, f):
 
 # ban friendly fire
 def nofriendly(board, m):
+    m = deepcopy(m)
+
     if 'captures' not in m.aux: # not a capture; allow
         return [m] # return unmodified
 
@@ -197,7 +210,7 @@ def compmod(board, lmod):
 def extend(board, m, extmods, amt, pathfinder):
     # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
 
-    m.aux['path'] = [m.dest] # m.src itself is not in the path! however m.dest (and everything in between) is
+    m.aux['path'] = []
     moves = []
     newmoves = [m] # calling the extension on moves every single time seems bad, so we will only operate on the newest ones
     # ^ this is guaranteed to work because we always use the same mods, so reapplying on old moves will only produce duplicates
@@ -209,10 +222,11 @@ def extend(board, m, extmods, amt, pathfinder):
         # the ride() modifier is separated from extmods
         # because ride() replaces, and must be stored in newnewmoves
         newmoves = expcontr(board, newmoves, compext) # perform the given modifiers on the moves
-        moves += newmoves
         # note how this looping setup ensures that every move, including the original one passed to extend(), gets put through this
         for nm in newmoves: # add to path only after performing necessary modifications, which may include altering nm.dest, or removing altogether
+            # m.src itself is not in the path! however m.dest (and everything in between) is
             nm.aux['path'].append(nm.dest)
+        moves += newmoves
 
         i += 1
         if i == amt: # right before ending, don't need to do the rest of this iteration
@@ -224,6 +238,9 @@ def extend(board, m, extmods, amt, pathfinder):
         # shift back
         newmoves = newnewmoves
 
+    # print('hey')
+    # print(m.src)
+    # print([thing.dest for thing in moves])
     return moves
 
 
