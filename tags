@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 A	pieces.py	/^A = makeleaper(2,2) # alfil$/;"	v
+B	pieces.py	/^B = makerider(1, 1) # bishop!!!$/;"	v
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
 Board	objects.py	/^class Board:$/;"	c
 Capture	objects.py	/^class Capture:$/;"	c
@@ -132,16 +133,19 @@ init	drawer.py	/^def init(width, height):$/;"	f
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
 leapoffs	moves.py	/^def leapoffs(a,b):$/;"	f
+leftrightcyl	moves.py	/^def leftrightcyl(board, m):$/;"	f
 locdelpiece	drawer.py	/^def locdelpiece(l):$/;"	f
 locplacepiece	drawer.py	/^def locplacepiece(l, piece):$/;"	f
 main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 makeleapgen	moves.py	/^def makeleapgen(a, b):$/;"	f
+makerider	moves.py	/^def makerider(a, b):$/;"	f
 modify	moves.py	/^def modify(p, mod):$/;"	f
 mousesquare	drawer.py	/^def mousesquare(m):$/;"	f
 move	graphics.py	/^    def move(self, dx, dy):$/;"	m	class:GraphicsObject
 nofriendly	moves.py	/^def nofriendly(board, m):$/;"	f
+nohop	moves.py	/^def nohop(board, m):$/;"	f
 noretrace	moves.py	/^def noretrace(board, m):$/;"	f
 nowrap	moves.py	/^def nowrap(board, m):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen

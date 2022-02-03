@@ -1,6 +1,7 @@
 from copy import deepcopy
 from objects import *
 
+# from main import height, width
 
 # i wanted to do this in lisp but i couldn't figure out how to integrate that with python, so here we are
 
@@ -34,6 +35,19 @@ def nowrap(board, m):
         return []
     return [m]
 
+# left-right cylindrical
+def leftrightcyl(board, m):
+    m.dest = (m.dest[0] % board.width, m.dest[1]) # wrap around on the x axis
+    return nowrap(board, m) # still have to obey the top-down bounds
+
+# nothing in the path between src and dest may be occupied, because that would be a hop
+# dest can be occupied; that's a capture (presumably)
+def nohop(board, m):
+    for l in m.aux['path'][:-1]:
+        if board.get(l) != None: # occupied
+            return []
+    return [m]
+
 
 # basis of a rider. extends outward in given direction and adds to path in the process
 # ride() is NOT an ordinary modifier! it replaces the given m with the next one in the path. it is used in extend()
@@ -41,7 +55,7 @@ def ride(board, m, pathfinder):
     # pathfinder tells how to derive the next direction(s)
     # in the case of simple riders it is just the identity function in brackets
     dir = m.dir
-    newdirs = pathfinder(newdir) # directions determined by pathfinder, can be 0, 1, etc.
+    newdirs = pathfinder(dir) # directions determined by pathfinder, can be 0, 1, etc.
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux) for nd in newdirs] # create new moves by adding generated directions onto current dest
 
     # we don't modify path yet, we wait for extend() to do that accounting for extmods
@@ -213,9 +227,20 @@ def extend(board, m, extmods, amt, pathfinder):
     return moves
 
 
-# def makerider(a, b):
-#     p1 = makeleapgen(a,b) # leap generator is basis for both leapers and riders
+def makerider(a, b):
+    p1 = makeleapgen(a,b) # leap generator for riders as well
+    extmods = [nowrap]
+    idem = lambda l: [l] # the identity location pathfinder
+    extendmod = lambda a, b: extend(a, b, extmods, -1, idem)
+    p2 = modify(p1, extendmod)
 
+    p3 = modify(p2, nohop) # no hopping, the rider must only pass through unoccupied squares until the destination
+
+    # move and capture by replacement
+    p4 = modify(p3, replace)
+    p5 = modify(p4, nofriendly) # no friendly fire
+
+    return p5
 
 
 # ex. makeleaper(2,1) is a knight
@@ -227,12 +252,12 @@ def makeleaper(a, b):
     extendmod = lambda a, b: extend(a, b, extmods, 1, None)
     # do not conflate extmods with extendmod
     p2 = modify(p1, extendmod)
-    print(p2)
+    # print(p2)
 
     # move and capture by replacement
     p3 = modify(p2, replace)
     # ban friendly fire
-    p4 = modify(p3, nofriendly)
+    p4 = modify(p3, nofriendly) # no friendly fire
 
     return p4
     
