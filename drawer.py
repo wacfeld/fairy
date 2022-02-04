@@ -112,6 +112,8 @@ def hlloc(l):
     hlsquare(board.get(l))
 
 def hlsquare(s):
+    if s.hl != None: # already highlighted, ignore
+        return
     curhl = s.rect.clone()
     curhl.setFill(hlcol)
     curhl.draw(win)

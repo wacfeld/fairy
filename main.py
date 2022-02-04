@@ -31,17 +31,17 @@ def readfen(fen):
 
 piecemap = {
         'k': pieces.K,
-        'q': pieces.NQ,
+        'q': pieces.Q,
         'r': pieces.R,
         'b': pieces.B,
-        'n': pieces.NN,
+        'n': pieces.N,
         'K': pieces.K,
-        'Q': pieces.NQ,
+        'Q': pieces.Q,
         'R': pieces.R,
         'B': pieces.B,
-        'N': pieces.NN,
-        'p': pieces.R, # temporary!
-        'P': pieces.R, # temporary!
+        'N': pieces.N,
+        'p': pieces.P,
+        'P': pieces.P,
         }
 
 
@@ -58,26 +58,36 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        # piece = piecemap[board.get(l1).name]
-        piece = pieces.X
+        piece = piecemap[board.get(l1).name]
+        # piece = pieces.Testpiece
         moves = piece(board, l1)
         # print(moves)
 
+        movedests = [m.dest for m in moves]
         # highlight all possible destinations
-        for m in moves:
-            drawer.hlloc(m.dest)
+        for d in movedests:
+            drawer.hlloc(d)
 
-        destdict = {m.dest:m.board for m in moves} # dictionary mapping destinations to boards
+        # destdict = {m.dest:m.board for m in moves} # dictionary mapping destinations to boards
 
         # get target location, check if valid
         l2 = drawer.getmousesquare().getloc()
-        if l2 in destdict: # legal move
-            board = destdict[l2]
+        if l2 in movedests: # legal move
+            boards = [m.board for m in moves if m.dest == l2] # get all resulting boards with that destination
+            # TODO implement check to see if all boards are same, in which case go ahead
+            # otherwise need some way to select which move to make, perhaps by highlighting path and all side effects
+            # (by simple before-after comparison)
+
+            # at the moment, pick the first one
+            board = boards[0]
+
+            # board = destdict[l2]
+
             drawer.update(board)
         
         # undo all highlight
         drawer.unhlloc(l1)
-        for l in destdict:
+        for l in movedests:
             drawer.unhlloc(l)
 
 def main():

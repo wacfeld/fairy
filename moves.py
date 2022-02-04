@@ -57,6 +57,30 @@ def nohop(board, m):
     return [m]
 
 
+# wrapper
+def onrow(r, src=True):
+    return lambda a,b: onrowmod(a, b, r, src)
+
+# check which row the piece starts/ends on, from that player's perspective
+# useful for pawns (initial move, promotion)
+# "row" here is relative to the forward direction, so it can either be ranks or files
+def onrowmod(board, m, r, src=True):
+    m = deepcopy(m)
+    forward = normalise(m.piece.forward) # assuming this is orthogonal
+    rankorfile = 1 if forward[1] != 0 else 0 # whether to go by rank or file
+
+    boardlen = board.height if rankorfile == 1 else board.width
+
+    loc = m.src if src else m.dest # whether to look at start or endpoint
+    row = loc[rankorfile]
+
+    if forward[rankorfile] < 0: # reversed, start from high end of board
+        row = boardlen - row - 1
+    if r == row: # matches requirement
+        return [m]
+    return []
+
+
 # basis of a rider. extends outward in given direction and adds to path in the process
 # ride() is NOT an ordinary modifier! it replaces the given m with the next one in the path. it is used in extend()
 def ride(board, m, pathfinder):
@@ -81,12 +105,16 @@ def normalise(d): # normalise a direction tuple
         return (d[0]/abs(d[0]), d[1])
 
 
+# wrapper
+def direct(d):
+    return lambda a,b: dirmod(a, b, d)
+
+# TODO replace normalise by dividing by gcd
 # restrict move by direction
 # forward, backward, left, right
-def direct(board, m, dirs):
+def dirmod(board, m, dirs):
     m = deepcopy(m)
     f = normalise(m.piece.forward) # normal vector telling which way is forward
-    print(f)
     l = (-f[1], f[0]) # left
     r = (f[1], -f[0]) # right
     b = (-f[0], -f[1]) # backwards
@@ -94,9 +122,12 @@ def direct(board, m, dirs):
 
     md = m.dir
     # split into components, normalise, convert through dictionary
-    xcomp = dirdict[normalise((md[0], 0))]
-    ycomp = dirdict[normalise((0, md[1]))]
-    if xcomp not in dirs or ycomp not in dirs: # illegal direction
+    xcomp = dirdict.get(normalise((md[0], 0)), '-')
+    ycomp = dirdict.get(normalise((0, md[1])), '-')
+    # ^^^ default value '-', which is not a direction
+    if xcomp not in dirs and ycomp not in dirs: # illegal direction
+        # move up and right diagonally counts as moving up
+        # therefore only one component has to satisfy the requirements
         return []
     return [m]
 
@@ -153,13 +184,42 @@ def replace(board, m):
 #         return moves
 #     return q
 
+
+# invert a filter modifier (one that either returns [m] or [])
+# this cannot always be applied, ex. applying this to nowrap would preserve out-of-bounds destinations
+def invmod(mod):
+    def q(board, m):
+        moves = mod(board, m)
+        if moves == []:
+            return [m]
+        else:
+            return []
+    return q
+
+
+# only allowed if capture takes place
+def capt(board, m):
+    if 'captures' in m.aux: # capture takes place
+        return [m]
+    return []
+    
+# opposite
+nocapt = invmod(capt)
+
+
+# apply modifiers in a list, left to right
+def modlist(p, ml):
+    for m in ml:
+        p = appmod(p, m)
+    return p
+
 # apply a modifier to a piece
-def modify(p, mod):
+def appmod(p, mod):
     def q(board, src):
         moves = p(board, src)
         newmoves = expcontr(board, moves, mod)
         return newmoves
-        # newmoves = [mod(board, m) for m in moves] # list of lists of moves
+        # newmoves = [appmod(board, m) for m in moves] # list of lists of moves
         # return [m for n in newmoves for m in n] # flatten newmoves
     return q
 
@@ -272,19 +332,21 @@ def extend(board, m, extmods, amt, pathfinder):
     # print([thing.dest for thing in moves])
     return moves
 
+# boundkeepers = [leftrightcyl, noretrace]
+boundkeepers = [nowrap]
 
-def makerider(a, b):
+def makerider(a, b, range=-1):
     p1 = makeleapgen(a,b) # leap generator for riders as well
-    extmods = [nowrap]
+    extmods = boundkeepers
     idem = lambda l: [l] # the identity location pathfinder
-    extendmod = lambda a, b: extend(a, b, extmods, -1, idem)
-    p2 = modify(p1, extendmod)
+    extendmod = lambda a, b: extend(a, b, extmods, range, idem)
+    p2 = appmod(p1, extendmod)
 
-    p3 = modify(p2, nohop) # no hopping, the rider must only pass through unoccupied squares until the destination
+    p3 = appmod(p2, nohop) # no hopping, the rider must only pass through unoccupied squares until the destination
 
     # move and capture by replacement
-    p4 = modify(p3, replace)
-    p5 = modify(p4, nofriendly) # no friendly fire
+    p4 = appmod(p3, replace)
+    p5 = appmod(p4, nofriendly) # no friendly fire
 
     return p5
 
@@ -293,17 +355,17 @@ def makerider(a, b):
 def makeleaper(a, b):
     p1 = makeleapgen(a,b)
     
-    # p2 = modify(p1, nowrap)
-    extmods = [nowrap] # no going out of bounds
+    # p2 = appmod(p1, nowrap)
+    extmods = boundkeepers # no going out of bounds
     extendmod = lambda a, b: extend(a, b, extmods, 1, None)
     # do not conflate extmods with extendmod
-    p2 = modify(p1, extendmod)
+    p2 = appmod(p1, extendmod)
     # print(p2)
 
     # move and capture by replacement
-    p3 = modify(p2, replace)
+    p3 = appmod(p2, replace)
     # ban friendly fire
-    p4 = modify(p3, nofriendly) # no friendly fire
+    p4 = appmod(p3, nofriendly) # no friendly fire
 
     return p4
     

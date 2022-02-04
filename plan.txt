@@ -49,7 +49,9 @@ variants to implement
 - [x] cylindrical
 
 - [ ] make compatible or semi-compatible with betza notation or your own notation
+- [ ] streamline the modification process and piece creation process. lists of modifications, leapers->riders more direct, etc.
 
+gameplay
 - [x] make a chessboard
 - [x] figure out where clicks land
 - [x] put pieces on the chessboard
@@ -61,7 +63,7 @@ variants to implement
 - [ ] make an engine that's good
 - [x] make object oriented
 - [ ] make readfen() call drawer.update()
-- [ ] streamline the modification process and piece creation process. lists of modifications, leapers->riders more direct, etc.
+- [ ] list moves, reset board, free edit, undo moves, etc.
 
 a proto-piece is simply a list of offsets, independent of location and surroundings of a piece
 
@@ -348,3 +350,7 @@ this requires us to have knowledge of the game over many moves
 well, there is a more logical way to restrict pawns anyways, which is, by rank
 you can move 2 squares if on the 2nd rank from your perspective
 but of course we will run into the initial move dilemma for castling anyway
+
+at the moment direction is implemented piece-by-piece, each piece gets its own direction property
+perhaps it should be built into a Player, and each piece references its Player
+but that's not very important right now

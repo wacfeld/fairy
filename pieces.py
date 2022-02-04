@@ -22,5 +22,19 @@ NK = compound(K, N) # knighted king
 KB = compound(B, K) # crowned bishop (dragon horse)
 KR = compound(R, K) # crowned rook (dragon king)
 
+shortR = makerider(0,1, 4) # short rook (range 4)
 
-X = modify(F, lambda a,b: direct(a, b, 'f')) # forward only ferz
+forW = appmod(W, direct('f')) # forward only wazir
+forF = appmod(F, direct('f')) # forward only ferz
+
+# TODO need to be able to limit range after-the-fact, for example range(R,4) is short rook
+print('hey')
+initP = modlist(makerider(0,1,2), [onrow(1), direct('f'), nocapt]) # initial pawn move, captures excluded
+captP = modlist(F, [direct('f'), capt]) # pawns capture as forward ferzes
+nocaptP = modlist(W, [direct('f'), nocapt]) # pawns move as forward wazirs
+
+
+
+P = compound(initP, captP, nocaptP) # the pawn
+# Testpiece = modlist(R, [leftrightcyl]) # cylindrical
+Testpiece = R
