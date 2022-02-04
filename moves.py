@@ -86,6 +86,7 @@ def normalise(d): # normalise a direction tuple
 def direct(board, m, dirs):
     m = deepcopy(m)
     f = normalise(m.piece.forward) # normal vector telling which way is forward
+    print(f)
     l = (-f[1], f[0]) # left
     r = (f[1], -f[0]) # right
     b = (-f[0], -f[1]) # backwards
