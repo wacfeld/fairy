@@ -76,11 +76,6 @@ def outward(board, m, prev):
         return [m]
     return []
 
-# when we don't care for what prev is, but still need to chain a move
-# another way to do this would be to have prev=None 
-def after(board, m, prev):
-
-
 
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)
@@ -475,7 +470,7 @@ def add(*pieces): # e.x. Q = add(R, B)
 # this is not ideal, ideally there would be no disconnect between the actual setting of auxes and how to merge them
 # however we need moves to occur independent of each other until they merge at the end
 auxmerges = {
-        'path': lambda a, b: a + b     # concatenate
+        'path': lambda a, b: a + b,    # concatenate
         'captures': lambda a, b: a + b # concatenate
         }
 
@@ -504,8 +499,20 @@ def chain(*pieces):
         # cursitus = [(src, board)] # current situations, consisting of board and src
         curmoves = pieces[0](board, src) # get first set of moves to work off of
         for p in pieces[1:]: # iterate through the rest and continue the process
-            newmoves = [(m, p(m.board. m.dest)) for m in curmoves] # old dest becomes new src
-            # ^^^ list of tuple containing parent move and list of child moves
+            newp = p
+            params = signature(p).parameters
+
+            # newmoves = [(m, p(m.board, m.dest)) for m in curmoves] # old dest becomes new src
+            newmoves = []
+            for m in curmoves:
+                if 'prev' in params: # it's a chained piece, which requires info about the previous move
+                    newp = lambda a, b: p(a, b, (None,m))
+                    # TODO right now moves only contain the board after the move is made
+                    # cleary this is not sufficient as seen in the tuple above. we need the board before and after
+                    # until that is implemented, only the move can be passed on through prev, not the board, when chaining
+                newmoves.append((m, newp(m.board, m.dest)))
+            # newmoves is a list of tuples containing parent move and list of child moves
+
             merged = [[mergemoves(tup[0], child) for child in tup[1]] for tup in newmoves]
             # curmoves = [m for x in merged for m in x] # flatten
             curmoves = flatten(merged)

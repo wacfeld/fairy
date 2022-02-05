@@ -15,7 +15,7 @@ DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	
 DEFAULT_CONFIG	graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	v
 Entry	graphics.py	/^class Entry(GraphicsObject):$/;"	c
 F	pieces.py	/^F = makeleaper(1,1) # ferz$/;"	v
-FtR	pieces.py	/^FtR = chain(F, modify(R, outward)$/;"	v
+FtR	pieces.py	/^FtR = add(F, chain(modify(F, nocapt), modify(R, outward)))$/;"	v
 GraphWin	graphics.py	/^class GraphWin(tk.Canvas):$/;"	c
 GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
 GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
@@ -41,6 +41,7 @@ Q	pieces.py	/^Q = add(B, R) # queen$/;"	v
 R	pieces.py	/^R = makerider(0,1) # rook$/;"	v
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
 Square	objects.py	/^class Square:$/;"	c
+Testpiece	pieces.py	/^Testpiece = FtR$/;"	v
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
@@ -96,7 +97,6 @@ _root	graphics.py	/^_root = tk.Tk()$/;"	v
 _setFontComponent	graphics.py	/^    def _setFontComponent(self, which, value):$/;"	m	class:Entry
 add	moves.py	/^def add(*pieces): # e.x. Q = add(R, B)$/;"	f
 addlocs	moves.py	/^def addlocs(a, b):$/;"	f
-after	moves.py	/^def after(board, m, prev):$/;"	f
 auxmerges	moves.py	/^auxmerges = {$/;"	v
 board	drawer.py	/^board  = None$/;"	v
 boundkeepers	moves.py	/^boundkeepers = [nowrap]$/;"	v
@@ -149,7 +149,7 @@ getX	graphics.py	/^    def getX(self): return self.x$/;"	m	class:Point
 getY	graphics.py	/^    def getY(self): return self.y$/;"	m	class:Point
 getloc	objects.py	/^    def getloc(self):$/;"	m	class:Square
 getmousesquare	drawer.py	/^def getmousesquare():$/;"	f
-height	main.py	/^height = 8$/;"	v
+height	main.py	/^height = 16$/;"	v
 hlcol	drawer.py	/^hlcol  = color_rgb(42,255,42) # highlight color$/;"	v
 hlloc	drawer.py	/^def hlloc(l):$/;"	f
 hlsquare	drawer.py	/^def hlsquare(s):$/;"	f
@@ -239,7 +239,7 @@ unhlsquare	drawer.py	/^def unhlsquare(s):$/;"	f
 update	drawer.py	/^def update(newboard):$/;"	f
 update	graphics.py	/^def update():$/;"	f
 updowncyl	moves.py	/^def updowncyl(board, m):$/;"	f
-width	main.py	/^width = 8$/;"	v
+width	main.py	/^width = 16$/;"	v
 win	drawer.py	/^win    = None$/;"	v
 world	graphics.py	/^    def world(self,xs,ys):$/;"	m	class:Transform
 yUp	graphics.py	/^    def yUp(self):$/;"	m	class:GraphWin
