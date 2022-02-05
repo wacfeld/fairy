@@ -35,9 +35,12 @@ nocaptP = modlist(W, [direct('f'), nocapt]) # pawns move as forward wazirs
 P = add(initP, captP, nocaptP) # the pawn
 
 # moves once like a Ferz (F), then optionally like a Rook, outward from original location (modify(R, outward))
-FtR = add(F, chain(modify(F, nocapt), modify(R, outward)))
+FtR = add(F, chain(modify(F, nocapt), modify(R, outward))) # ferz then rook (aanca/gryphon)
 # TODO make a modifier that bans intermediate captures so that we don't have to manually put nocapt on the second ferz
-Testpiece = FtR
+# or, simply something that uses chain but modifies with outward, nocapt, add, as needed to get the desired result
+NtB = add(N, chain(modify(N, nocapt), modify(B, outward))) # knight then bishop (unicorn)
+WtB = add(W, chain(modify(W, nocapt), modify(B, outward))) # wazir then bishop
+Testpiece = NN
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))

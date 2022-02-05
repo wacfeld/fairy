@@ -12,7 +12,7 @@
 - [ ] en passant, castling
 - [ ] check, checkmate, (royalty) illegal moves
 - [ ] hoppers
-- [ ] bent riders (one moveset after another, influencing each other possibly)
+- [x] bent riders (one moveset after another, influencing each other possibly)
 - [ ] circular riders
 - [ ] crooked riders
 - [ ] ranged riders
@@ -361,3 +361,22 @@ they are an example of chaining/concatenation
 i am able to implement the gryphon (ferz + outward rook) without any extra communication between the two pieces
 we simply know the where the ferz moved, and also where our original source was. using that we can figure out how to move outward with a general modifier
 but it might be necessary to have some interface for consecutive pieces to communicate with each other, for more complicated things
+
+
+the pathfinders need more information. i need to know whether to go clockwise or anticlockwise,
+crooked up or crooked left, etc.
+
+the information should be stored in aux. then pathfinder must be passed the Move whose path we are trying to extend
+wait no.
+we have some confusion.
+there is a general direction (up, down, etc.)
+and the momentary direction (in a zigzag, up-left and up-right, for example)
+the thing is we want to be able to derive this all from a leaper generator
+and problematically, the same initial leap can split into multiple paths, but afterward there is no splitting
+perhaps we have to look at path, to inform pathfinder...
+
+so: we look at the last two coordinates on path.
+if there is only one in path, then it just came out of makeleapgen() and is currently on its first pass through extend()
+then we diverge
+if there are two or more, we can then derive the general direction (three points including src) it's going in, and continue
+all of this can be done through rotate(), mirror(), etc. operations. that is the basis of crooked and cylindrical pipeces

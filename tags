@@ -15,7 +15,7 @@ DEAD_THREAD	graphics.py	/^DEAD_THREAD = "Graphics thread quit unexpectedly"$/;"	
 DEFAULT_CONFIG	graphics.py	/^DEFAULT_CONFIG = {"fill":"",$/;"	v
 Entry	graphics.py	/^class Entry(GraphicsObject):$/;"	c
 F	pieces.py	/^F = makeleaper(1,1) # ferz$/;"	v
-FtR	pieces.py	/^FtR = add(F, chain(modify(F, nocapt), modify(R, outward)))$/;"	v
+FtR	pieces.py	/^FtR = add(F, chain(modify(F, nocapt), modify(R, outward))) # ferz then rook (aanca\/gryphon)$/;"	v
 GraphWin	graphics.py	/^class GraphWin(tk.Canvas):$/;"	c
 GraphicsError	graphics.py	/^class GraphicsError(Exception):$/;"	c
 GraphicsObject	graphics.py	/^class GraphicsObject:$/;"	c
@@ -31,6 +31,7 @@ NK	pieces.py	/^NK = add(K, N) # knighted king$/;"	v
 NN	pieces.py	/^NN = makerider(2,1) # nightrider$/;"	v
 NQ	pieces.py	/^NQ = add(Q, N) # knighted queen (amazon)$/;"	v
 NR	pieces.py	/^NR = add(R, N) # knighted rook (empress\/chancellor)$/;"	v
+NtB	pieces.py	/^NtB = add(N, chain(modify(N, nocapt), modify(B, outward))) # knight then bishop (unicorn)$/;"	v
 OBJ_ALREADY_DRAWN	graphics.py	/^OBJ_ALREADY_DRAWN = "Object currently drawn"$/;"	v
 Oval	graphics.py	/^class Oval(_BBox):$/;"	c
 P	pieces.py	/^P = add(initP, captP, nocaptP) # the pawn$/;"	v
@@ -41,11 +42,12 @@ Q	pieces.py	/^Q = add(B, R) # queen$/;"	v
 R	pieces.py	/^R = makerider(0,1) # rook$/;"	v
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
 Square	objects.py	/^class Square:$/;"	c
-Testpiece	pieces.py	/^Testpiece = FtR$/;"	v
+Testpiece	pieces.py	/^Testpiece = NN$/;"	v
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
 W	pieces.py	/^W = makeleaper(0,1) # wazir$/;"	v
+WtB	pieces.py	/^WtB = add(W, chain(modify(W, nocapt), modify(B, outward))) # wazir then bishop$/;"	v
 _BBox	graphics.py	/^class _BBox(GraphicsObject):$/;"	c
 __autoflush	graphics.py	/^    def __autoflush(self):$/;"	m	class:GraphWin	file:
 __checkOpen	graphics.py	/^    def __checkOpen(self):$/;"	m	class:GraphWin	file:
@@ -104,6 +106,7 @@ capt	moves.py	/^def capt(board, m):$/;"	f
 captP	pieces.py	/^captP = modlist(F, [direct('f'), capt]) # pawns capture as forward ferzes$/;"	v
 chain	moves.py	/^def chain(*pieces):$/;"	f
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
+circular	moves.py	/^def circular(m):$/;"	f
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Entry
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Image
@@ -115,9 +118,11 @@ clone	graphics.py	/^    def clone(self):$/;"	m	class:Rectangle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Text
 close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
-colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white$/;"	v
+colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # pink, white$/;"	v
 compmod	moves.py	/^def compmod(board, lmod):$/;"	f
+crooked	moves.py	/^def crooked(m):$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
+diradj	moves.py	/^def diradj(d):$/;"	f
 direct	moves.py	/^def direct(d):$/;"	f
 dirmod	moves.py	/^def dirmod(board, m, dirs):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
@@ -186,6 +191,7 @@ onrow	moves.py	/^def onrow(r, src=True):$/;"	f
 onrowmod	moves.py	/^def onrowmod(board, m, r, src=True):$/;"	f
 outward	moves.py	/^def outward(board, m, prev):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen
+pathfinders	moves.py	/^pathfinders = {$/;"	v
 piecemap	main.py	/^piecemap = {$/;"	v
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f

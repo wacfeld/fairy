@@ -7,6 +7,49 @@ import math
 
 # i wanted to do this in lisp but i couldn't figure out how to integrate that with python, so here we are
 
+def diradj(d):
+    dirs = leapoffs(*d) # get ordered distinct directions
+    numdirs = len(dirs)
+    idx = dirs.index(d)
+    adj1 = dirs[(idx + 1) % numdirs]
+    adj2 = dirs[(idx - 1) % numdirs]
+    return [adj1, adj2]
+
+
+def circular(m):
+    if len(m.aux['path']) == 1: # not enough data to determine direction, provide both options
+        return diradj(m.dir)
+    else: # enough data, extrapolate
+        fullpath = [m.src] + m.aux['path'] # we might need src in this case; include
+
+        dirp = sublocs(fullpath[-2], fullpath[-3]) # previous dir
+        dirc = m.dir # current dir
+        adjs = diradj(dirc) # get adjacent dirs (of which dirp should be one)
+        if adjs[0] == dirp:
+            print(dirc, adjs[1])
+            return [adjs[1]]
+        else:
+            print(dirc, adjs[0])
+            return [adjs[0]]
+        # basically, find where you are in the circle, and also which direction to go (requires 2 directions, or 3 points on a path)
+
+
+
+# crooked pathfinder (zigzag)
+def crooked(m):
+    if len(m.aux['path']) == 1: # not enough data to determine direction, provide both options
+        return diradj(m.dir)
+    else: # enough data, extrapolate
+        fullpath = [m.src] + m.aux['path'] # we might need src in this case; include
+        dirp = sublocs(fullpath[-2], fullpath[-3]) # previous dir
+        return [dirp] # crooked movement is a back and forth, so the previous direction is the next one
+
+
+pathfinders = {
+        'idem': lambda m: [m.dir], # the identity location pathfinder
+        'crooked': crooked,
+        'circular': circular
+        }
 
 # flatten([[1, 2], [3, 4]]) = [1, 2, 3, 4]
 def flatten(ll):
@@ -21,18 +64,27 @@ def sameside(p1, p2):
 # makeleaper turns this into a piece (a function) which captures by replacement, stays within board bounds, etc.
 # this facilitates the creation of riders, cylindrical pieces, etc.
 def leapoffs(a,b):
+    # the order listed is important, as it will be used to create circular/crooked riders
+    # the order is where all adjacent directions are adjacent in the list (it's a circle)
+
+    # without the absolute values then diradj((-1,1)) is broken. have not looked into it
+    a = abs(a)
+    b = abs(b)
+    a, b = max(a, b), min(a, b) # required to make the circles not ovals
     offsets = [
-            (-a, -b),
-            (-a, +b),
-            (+a, -b),
             (+a, +b),
-            (-b, -a),
-            (-b, +a),
-            (+b, -a),
             (+b, +a),
+            (-b, +a),
+            (-a, +b),
+            (-a, -b),
+            (-b, -a),
+            (+b, -a),
+            (+a, -b),
             ]
     # remove duplicates (e.x. a (2,2) leaper has only 4 moves, not 8
-    offsets = list(set(offsets))
+    # offsets = list(set(offsets))
+    offsets = list(dict.fromkeys(offsets))
+    # it seems that dict.fromkeys() preserves order while set() does not
 
     return offsets
 
@@ -122,7 +174,7 @@ def ride(board, m, pathfinder):
     # in the case of simple riders it is just the identity function in brackets
     m = deepcopy(m)
     dir = m.dir
-    newdirs = pathfinder(dir) # directions determined by pathfinder, can be 0, 1, etc.
+    newdirs = pathfinder(m) # directions determined by pathfinder, can be 0 or more
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux, piece=m.piece) for nd in newdirs] # create new moves by adding generated directions onto current dest
 
     # we don't modify path yet, we wait for extend() to do that accounting for extmods
@@ -171,10 +223,12 @@ def dirmod(board, m, dirs):
 def noretrace(board, m):
     m = deepcopy(m)
     path = m.aux['path']
+    fullpath = [m.src] + path
     # note that path contains m.dest itself, so we must exclude that
-    for i in range(len(path) - 1):
-        dir = sublocs(path[i+1], path[i])
-        if path[i] == m.dest and dir == m.dir: # both coincide, retracing found
+    for i in range(1,len(fullpath) - 1):
+        dir = sublocs(fullpath[i], fullpath[i-1]) # where you are coming from is your dest, not where you are going
+        if fullpath[i] == m.dest and dir == m.dir: # both coincide, retracing found
+        # if fullpath[i] == m.dest:
             return []
 
     # if m.dest in board.aux['path']:
@@ -309,6 +363,7 @@ def nofriendly(board, m):
 
 # add two locations coordinate wise
 def addlocs(a, b):
+    # print(a, b)
     return (a[0] + b[0], a[1] + b[1])
 
 
@@ -383,6 +438,7 @@ def extendmod(board, m, extmods, amt, pathfinder):
     return moves
 
 # boundkeepers = [updowncyl, leftrightcyl, noretrace]
+# boundkeepers = [noretrace, nowrap]
 boundkeepers = [nowrap]
 
 def makerider(a, b, range=-1):
@@ -398,10 +454,9 @@ def makerider(a, b, range=-1):
     # p4 = modify(p3, replace)
     # p5 = modify(p4, nofriendly) # no friendly fire
 
-    idem = lambda l: [l] # the identity location pathfinder
     extmods = boundkeepers
     p5 = modlist(p1, [
-        extend(extmods, range, idem),
+        extend(extmods, range, pathfinders['idem']),
         nohop,
         replace,
         nofriendly
@@ -426,7 +481,7 @@ def makeleaper(a, b):
     # # ban friendly fire
     # p4 = modify(p3, nofriendly) # no friendly fire
 
-    idem = lambda l: [l] # the identity location pathfinder
+    # idem = lambda l: [l] # the identity location pathfinder
     extmods = boundkeepers
     p4 = modlist(p1, [
         extend(extmods, 1, None),
@@ -520,3 +575,5 @@ def chain(*pieces):
         return curmoves
 
     return q
+
+print(diradj((1,2)))

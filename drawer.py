@@ -14,7 +14,9 @@ squareside = 50 # side length of board square
 
 board  = None
 hlcol  = color_rgb(42,255,42) # highlight color
-colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # black, white
+colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # pink, white
+# colors = [color_rgb(93,93,93), color_rgb(241,241,201)] # grey, white
+# colors = [color_rgb(255,165,0), color_rgb(241,241,201)] # orange, white
 win    = None
 
 # filenames of all piece sprites
