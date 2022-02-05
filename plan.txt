@@ -13,8 +13,8 @@
 - [ ] check, checkmate, (royalty) illegal moves
 - [ ] hoppers
 - [x] bent riders (one moveset after another, influencing each other possibly)
-- [ ] circular riders
-- [ ] crooked riders
+- [x] circular riders
+- [x] crooked riders
 - [ ] ranged riders
     - [ ] min
     - [x] max
