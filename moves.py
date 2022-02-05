@@ -1,10 +1,16 @@
 from copy import deepcopy
 from objects import *
+from inspect import signature
 import math
 
 # from main import height, width
 
 # i wanted to do this in lisp but i couldn't figure out how to integrate that with python, so here we are
+
+
+# flatten([[1, 2], [3, 4]]) = [1, 2, 3, 4]
+def flatten(ll):
+    return [x for l in ll for x in l]
 
 
 # check if two pieces are on the same side
@@ -41,7 +47,40 @@ def nowrap(board, m):
 def leftrightcyl(board, m):
     m = deepcopy(m)
     m.dest = (m.dest[0] % board.width, m.dest[1]) # wrap around on the x axis
-    return nowrap(board, m) # still have to obey the top-down bounds
+    return [m]
+    # return nowrap(board, m) # still have to obey the top-down bounds
+
+# not very useful for standard chess, but here for completeness
+def updowncyl(board, m):
+    m = deepcopy(m)
+    m.dest = (m.dest[0], m.dest[1] % board.height) # wrap around on the y axis
+    return [m]
+    # return nowrap(board, m) # still have to obey the left-right bounds
+
+
+# in same quadrant of cartesian plane (being on boundaries allowed too)
+def samequad(d1, d2):
+    return (d1[0] * d2[0] >= 0) and (d1[1] * d2[1] >= 0)
+
+
+# the move's direction of destination must be outward from the previous src
+# useful for bent riders, etc.
+# special type of modifier that can only be applied to a subsequent move (in chaining)
+# prev is a tuple (prevboard, prevm)
+def outward(board, m, prev):
+    m = deepcopy(m)
+    prevm = prev[1]
+    refdir = sublocs(m.src, prevm.src) # reference direction
+    curdir = m.dir
+    if samequad(refdir, curdir):
+        return [m]
+    return []
+
+# when we don't care for what prev is, but still need to chain a move
+# another way to do this would be to have prev=None 
+def after(board, m, prev):
+
+
 
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)
@@ -210,16 +249,27 @@ nocapt = invmod(capt)
 # apply modifiers in a list, left to right
 def modlist(p, ml):
     for m in ml:
-        p = appmod(p, m)
+        p = modify(p, m)
     return p
 
 # apply a modifier to a piece
-def appmod(p, mod):
-    def q(board, src):
+def modify(p, mod):
+    def q(board, src, prev=None):
+        # prev is used for chaining
+
         moves = p(board, src)
-        newmoves = expcontr(board, moves, mod)
+
+        newmod = mod # in case no chaining, change nothing
+        if prev != None: # we are chaining
+            # check if mod supports chaining
+            params = signature(mod).parameters
+            if 'prev' in params: # does support, pass on
+                newmod = lambda a, b: mod(a, b, prev)
+            # otherwise, treat as regular mod, don't pass on
+
+        newmoves = expcontr(board, moves, newmod)
         return newmoves
-        # newmoves = [appmod(board, m) for m in moves] # list of lists of moves
+        # newmoves = [modify(board, m) for m in moves] # list of lists of moves
         # return [m for n in newmoves for m in n] # flatten newmoves
     return q
 
@@ -228,7 +278,8 @@ def appmod(p, mod):
 # and then flatten (contract) it
 def expcontr(board, l, f):
     exp = [f(board, m) for m in l]
-    newl = [m for e in exp for m in e]
+    # newl = [m for e in exp for m in e]
+    newl = flatten(exp)
     return newl
 
 
@@ -295,8 +346,12 @@ def compmod(board, lmod):
     return res
 
 
+# wrapper
+def extend(extmods, amt, pathfinder):
+    return lambda a, b: extendmod(a, b, extmods, amt, pathfinder)
+
 # extend a directioned move until we cannot anymore
-def extend(board, m, extmods, amt, pathfinder):
+def extendmod(board, m, extmods, amt, pathfinder):
     # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
 
     m.aux['path'] = []
@@ -332,21 +387,30 @@ def extend(board, m, extmods, amt, pathfinder):
     # print([thing.dest for thing in moves])
     return moves
 
-# boundkeepers = [leftrightcyl, noretrace]
+# boundkeepers = [updowncyl, leftrightcyl, noretrace]
 boundkeepers = [nowrap]
 
 def makerider(a, b, range=-1):
     p1 = makeleapgen(a,b) # leap generator for riders as well
-    extmods = boundkeepers
+    # extmods = boundkeepers
+    # idem = lambda l: [l] # the identity location pathfinder
+    # # extendmod = lambda a, b: extend(a, b, extmods, range, idem)
+    # p2 = modify(p1, extend(extmods, range, idem))
+
+    # p3 = modify(p2, nohop) # no hopping, the rider must only pass through unoccupied squares until the destination
+
+    # # move and capture by replacement
+    # p4 = modify(p3, replace)
+    # p5 = modify(p4, nofriendly) # no friendly fire
+
     idem = lambda l: [l] # the identity location pathfinder
-    extendmod = lambda a, b: extend(a, b, extmods, range, idem)
-    p2 = appmod(p1, extendmod)
-
-    p3 = appmod(p2, nohop) # no hopping, the rider must only pass through unoccupied squares until the destination
-
-    # move and capture by replacement
-    p4 = appmod(p3, replace)
-    p5 = appmod(p4, nofriendly) # no friendly fire
+    extmods = boundkeepers
+    p5 = modlist(p1, [
+        extend(extmods, range, idem),
+        nohop,
+        replace,
+        nofriendly
+        ])
 
     return p5
 
@@ -355,17 +419,25 @@ def makerider(a, b, range=-1):
 def makeleaper(a, b):
     p1 = makeleapgen(a,b)
     
-    # p2 = appmod(p1, nowrap)
-    extmods = boundkeepers # no going out of bounds
-    extendmod = lambda a, b: extend(a, b, extmods, 1, None)
-    # do not conflate extmods with extendmod
-    p2 = appmod(p1, extendmod)
-    # print(p2)
+    # # p2 = modify(p1, nowrap)
+    # extmods = boundkeepers # no going out of bounds
+    # # extendmod = lambda a, b: extend(a, b, extmods, 1, None)
+    # # do not conflate extmods with extendmod
+    # p2 = modify(p1, extend(extmods, 1, None))
+    # # print(p2)
 
-    # move and capture by replacement
-    p3 = appmod(p2, replace)
-    # ban friendly fire
-    p4 = appmod(p3, nofriendly) # no friendly fire
+    # # move and capture by replacement
+    # p3 = modify(p2, replace)
+    # # ban friendly fire
+    # p4 = modify(p3, nofriendly) # no friendly fire
+
+    idem = lambda l: [l] # the identity location pathfinder
+    extmods = boundkeepers
+    p4 = modlist(p1, [
+        extend(extmods, 1, None),
+        replace,
+        nofriendly
+        ])
 
     return p4
     
@@ -390,9 +462,54 @@ def makeleaper(a, b):
         # return moves
     return p
 
-def compound(*pieces): # e.x. Q = compound(R, B)
+def add(*pieces): # e.x. Q = add(R, B)
     def q(board, src):
         movelists = [p(board, src) for p in pieces] # get moves for each piece
-        moves = [m for list in movelists for m in list] # flatten
+        # moves = [m for list in movelists for m in list] # flatten
+        moves = flatten(movelists)
         return moves
+    return q
+
+
+# how to merge each type of aux entry
+# this is not ideal, ideally there would be no disconnect between the actual setting of auxes and how to merge them
+# however we need moves to occur independent of each other until they merge at the end
+auxmerges = {
+        'path': lambda a, b: a + b     # concatenate
+        'captures': lambda a, b: a + b # concatenate
+        }
+
+
+# if a piece makes two moves in a row, then their src, aux, etc. need to be merged
+def mergemoves(m1, m2):
+    m1 = deepcopy(m1)
+    m2 = deepcopy(m2)
+    m = m2 # inherits proper dest, dir, board, part of aux
+    m.src = m1.src # set proper src (the first one)
+    for a in m1.aux: # merge aux
+        if a not in m2.aux: # not in m2, no need to merge
+            m.aux[a] = m1.aux[a]
+        else:
+            merge = auxmerges[a] # get merge function for this type of aux
+            m.aux[a] = merge(m.aux[a], m1.aux[a]) # merge each of them
+
+    # not sure what to do if piece changes, but for now we will just make it the same as m2, the final piece
+
+    return m
+
+
+# chain piece moves together, one after another
+def chain(*pieces):
+    def q(board, src):
+        # cursitus = [(src, board)] # current situations, consisting of board and src
+        curmoves = pieces[0](board, src) # get first set of moves to work off of
+        for p in pieces[1:]: # iterate through the rest and continue the process
+            newmoves = [(m, p(m.board. m.dest)) for m in curmoves] # old dest becomes new src
+            # ^^^ list of tuple containing parent move and list of child moves
+            merged = [[mergemoves(tup[0], child) for child in tup[1]] for tup in newmoves]
+            # curmoves = [m for x in merged for m in x] # flatten
+            curmoves = flatten(merged)
+
+        return curmoves
+
     return q

@@ -6,9 +6,9 @@
 
 - [x] leapers
 - [x] riders
-- [ ] pawns
+- [x] pawns
     - [ ] promotion
-    - [ ] initial moves
+    - [x] initial moves
 - [ ] en passant, castling
 - [ ] check, checkmate, (royalty) illegal moves
 - [ ] hoppers
@@ -19,7 +19,7 @@
     - [ ] min
     - [x] max
         - (through amt, i think)
-- [ ] checker
+- [ ] checkers
 - [ ] hoppers
     - [ ] cannons
     - [ ] locusts
@@ -354,3 +354,10 @@ but of course we will run into the initial move dilemma for castling anyway
 at the moment direction is implemented piece-by-piece, each piece gets its own direction property
 perhaps it should be built into a Player, and each piece references its Player
 but that's not very important right now
+
+ok bent riders:
+they are an example of chaining/concatenation
+
+i am able to implement the gryphon (ferz + outward rook) without any extra communication between the two pieces
+we simply know the where the ferz moved, and also where our original source was. using that we can figure out how to move outward with a general modifier
+but it might be necessary to have some interface for consecutive pieces to communicate with each other, for more complicated things

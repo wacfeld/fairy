@@ -91,8 +91,9 @@ def play(board, side): # get moves from alternating sides
             drawer.unhlloc(l)
 
 def main():
-    drawer.init(8,8)
+    drawer.init(width, height)
     standard = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    testfen = '88/88/88/88/88/88/88/87N w KQkq - 0 1'
 
     board = readfen(standard)
     play(board, 1)
