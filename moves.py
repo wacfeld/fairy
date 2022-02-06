@@ -1,6 +1,7 @@
 from copy import deepcopy
 from objects import *
 from inspect import signature
+import pathfinders
 import math
 
 # from main import height, width
@@ -15,41 +16,6 @@ def diradj(d):
     adj2 = dirs[(idx - 1) % numdirs]
     return [adj1, adj2]
 
-
-def circular(m):
-    if len(m.aux['path']) == 1: # not enough data to determine direction, provide both options
-        return diradj(m.dir)
-    else: # enough data, extrapolate
-        fullpath = [m.src] + m.aux['path'] # we might need src in this case; include
-
-        dirp = sublocs(fullpath[-2], fullpath[-3]) # previous dir
-        dirc = m.dir # current dir
-        adjs = diradj(dirc) # get adjacent dirs (of which dirp should be one)
-        if adjs[0] == dirp:
-            print(dirc, adjs[1])
-            return [adjs[1]]
-        else:
-            print(dirc, adjs[0])
-            return [adjs[0]]
-        # basically, find where you are in the circle, and also which direction to go (requires 2 directions, or 3 points on a path)
-
-
-
-# crooked pathfinder (zigzag)
-def crooked(m):
-    if len(m.aux['path']) == 1: # not enough data to determine direction, provide both options
-        return diradj(m.dir)
-    else: # enough data, extrapolate
-        fullpath = [m.src] + m.aux['path'] # we might need src in this case; include
-        dirp = sublocs(fullpath[-2], fullpath[-3]) # previous dir
-        return [dirp] # crooked movement is a back and forth, so the previous direction is the next one
-
-
-pathfinders = {
-        'idem': lambda m: [m.dir], # the identity location pathfinder
-        'crooked': crooked,
-        'circular': circular
-        }
 
 # flatten([[1, 2], [3, 4]]) = [1, 2, 3, 4]
 def flatten(ll):
@@ -169,12 +135,12 @@ def onrowmod(board, m, r, src=True):
 
 # basis of a rider. extends outward in given direction and adds to path in the process
 # ride() is NOT an ordinary modifier! it replaces the given m with the next one in the path. it is used in extend()
-def ride(board, m, pathfinder):
-    # pathfinder tells how to derive the next direction(s)
+def ride(board, m, pf):
+    # pf tells how to derive the next direction(s)
     # in the case of simple riders it is just the identity function in brackets
     m = deepcopy(m)
     dir = m.dir
-    newdirs = pathfinder(m) # directions determined by pathfinder, can be 0 or more
+    newdirs = pf(m) # directions determined by pf, can be 0 or more
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux, piece=m.piece) for nd in newdirs] # create new moves by adding generated directions onto current dest
 
     # we don't modify path yet, we wait for extend() to do that accounting for extmods
@@ -397,11 +363,11 @@ def compmod(board, lmod):
 
 
 # wrapper
-def extend(extmods, amt, pathfinder):
-    return lambda a, b: extendmod(a, b, extmods, amt, pathfinder)
+def extend(extmods, amt, pf):
+    return lambda a, b: extendmod(a, b, extmods, amt, pf)
 
 # extend a directioned move until we cannot anymore
-def extendmod(board, m, extmods, amt, pathfinder):
+def extendmod(board, m, extmods, amt, pf):
     # extmods includes both the thing to perform the extension (at the front of the list) and also any necessary filters (ex. nowrap)
 
     m.aux['path'] = []
@@ -424,9 +390,9 @@ def extendmod(board, m, extmods, amt, pathfinder):
 
         i += 1
         if i == amt: # right before ending, don't need to do the rest of this iteration
-            # perhaps this is a kludge, but it allows us to not specify pathfinder for leapers (amt=1)
+            # perhaps this is a kludge, but it allows us to not specify pf for leapers (amt=1)
             continue
-        ridemod = lambda a, b: ride(a, b, pathfinder) # ride() itself is not a modifier, it has an extra argument
+        ridemod = lambda a, b: ride(a, b, pf) # ride() itself is not a modifier, it has an extra argument
         newnewmoves = expcontr(board, newmoves, ridemod) # extend by 1
 
         # shift back
@@ -441,7 +407,7 @@ def extendmod(board, m, extmods, amt, pathfinder):
 # boundkeepers = [noretrace, nowrap]
 boundkeepers = [nowrap]
 
-def makerider(a, b, range=-1):
+def makerider(a, b, range=-1, pf=pathfinders.idem):
     p1 = makeleapgen(a,b) # leap generator for riders as well
     # extmods = boundkeepers
     # idem = lambda l: [l] # the identity location pathfinder
@@ -456,7 +422,7 @@ def makerider(a, b, range=-1):
 
     extmods = boundkeepers
     p5 = modlist(p1, [
-        extend(extmods, range, pathfinders['idem']),
+        extend(extmods, range, pathfinders.idem),
         nohop,
         replace,
         nofriendly

@@ -106,7 +106,7 @@ capt	moves.py	/^def capt(board, m):$/;"	f
 captP	pieces.py	/^captP = modlist(F, [direct('f'), capt]) # pawns capture as forward ferzes$/;"	v
 chain	moves.py	/^def chain(*pieces):$/;"	f
 checkMouse	graphics.py	/^    def checkMouse(self):$/;"	m	class:GraphWin
-circular	moves.py	/^def circular(m):$/;"	f
+circular	pathfinders.py	/^def circular(m):$/;"	f
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Circle
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Entry
 clone	graphics.py	/^    def clone(self):$/;"	m	class:Image
@@ -120,15 +120,15 @@ close	graphics.py	/^    def close(self):$/;"	m	class:GraphWin
 color_rgb	graphics.py	/^def color_rgb(r,g,b):$/;"	f
 colors	drawer.py	/^colors = [color_rgb(240,114,114), color_rgb(241,241,201)] # pink, white$/;"	v
 compmod	moves.py	/^def compmod(board, lmod):$/;"	f
-crooked	moves.py	/^def crooked(m):$/;"	f
+crooked	pathfinders.py	/^def crooked(m):$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 diradj	moves.py	/^def diradj(d):$/;"	f
 direct	moves.py	/^def direct(d):$/;"	f
 dirmod	moves.py	/^def dirmod(board, m, dirs):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
 expcontr	moves.py	/^def expcontr(board, l, f):$/;"	f
-extend	moves.py	/^def extend(extmods, amt, pathfinder):$/;"	f
-extendmod	moves.py	/^def extendmod(board, m, extmods, amt, pathfinder):$/;"	f
+extend	moves.py	/^def extend(extmods, amt, pf):$/;"	f
+extendmod	moves.py	/^def extendmod(board, m, extmods, amt, pf):$/;"	f
 flatten	moves.py	/^def flatten(ll):$/;"	f
 flush	graphics.py	/^    def flush(self):$/;"	m	class:GraphWin
 forF	pieces.py	/^forF = modify(F, direct('f')) # forward only ferz$/;"	v
@@ -159,6 +159,7 @@ hlcol	drawer.py	/^hlcol  = color_rgb(42,255,42) # highlight color$/;"	v
 hlloc	drawer.py	/^def hlloc(l):$/;"	f
 hlsquare	drawer.py	/^def hlsquare(s):$/;"	f
 idCount	graphics.py	/^    idCount = 0$/;"	v	class:Image
+idem	pathfinders.py	/^def idem(m):$/;"	f
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
 inbounds	objects.py	/^    def inbounds(self, loc):$/;"	m	class:Board
 init	drawer.py	/^def init(width, height):$/;"	f
@@ -174,7 +175,7 @@ main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 makeleapgen	moves.py	/^def makeleapgen(a, b):$/;"	f
-makerider	moves.py	/^def makerider(a, b, range=-1):$/;"	f
+makerider	moves.py	/^def makerider(a, b, range=-1, pf=pathfinders.idem):$/;"	f
 mergemoves	moves.py	/^def mergemoves(m1, m2):$/;"	f
 modify	moves.py	/^def modify(p, mod):$/;"	f
 modlist	moves.py	/^def modlist(p, ml):$/;"	f
@@ -191,7 +192,6 @@ onrow	moves.py	/^def onrow(r, src=True):$/;"	f
 onrowmod	moves.py	/^def onrowmod(board, m, r, src=True):$/;"	f
 outward	moves.py	/^def outward(board, m, prev):$/;"	f
 p1	moves.py	/^    def p1(board, src):$/;"	f	function:makeleapgen
-pathfinders	moves.py	/^pathfinders = {$/;"	v
 piecemap	main.py	/^piecemap = {$/;"	v
 placepiece	drawer.py	/^def placepiece(s, piece):$/;"	f
 play	main.py	/^def play(board, side): # get moves from alternating sides$/;"	f
@@ -206,7 +206,7 @@ q	moves.py	/^    def q(board, src, prev=None):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
 replace	moves.py	/^def replace(board, m):$/;"	f
 res	moves.py	/^    def res(board, m):$/;"	f	function:compmod
-ride	moves.py	/^def ride(board, m, pathfinder):$/;"	f
+ride	moves.py	/^def ride(board, m, pf):$/;"	f
 samequad	moves.py	/^def samequad(d1, d2):$/;"	f
 sameside	moves.py	/^def sameside(p1, p2):$/;"	f
 save	graphics.py	/^    def save(self, filename):$/;"	m	class:Image
