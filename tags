@@ -5,9 +5,10 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 A	pieces.py	/^A = makeleaper(2,2) # alfil$/;"	v
-B	pieces.py	/^B = makerider(1, 1) # bishop$/;"	v
+B	pieces.py	/^B = makerider((1, 1)) # bishop$/;"	v
 BAD_OPTION	graphics.py	/^BAD_OPTION = "Illegal option value"$/;"	v
 Board	objects.py	/^class Board:$/;"	c
+Boyscout	pieces.py	/^Boyscout = makerider((1,1), pf=pathfinders.crooked) # crooked bishop$/;"	v
 Capture	objects.py	/^class Capture:$/;"	c
 Circle	graphics.py	/^class Circle(Oval):$/;"	c
 D	pieces.py	/^D = makeleaper(0,2) # dabbaba$/;"	v
@@ -28,7 +29,7 @@ Move	objects.py	/^class Move:$/;"	c
 N	pieces.py	/^N = makeleaper(2,1) # knight$/;"	v
 NB	pieces.py	/^NB = add(B, N) # knighted bishop (princess\/archbishop)$/;"	v
 NK	pieces.py	/^NK = add(K, N) # knighted king$/;"	v
-NN	pieces.py	/^NN = makerider(2,1) # nightrider$/;"	v
+NN	pieces.py	/^NN = makerider((2,1)) # nightrider$/;"	v
 NQ	pieces.py	/^NQ = add(Q, N) # knighted queen (amazon)$/;"	v
 NR	pieces.py	/^NR = add(R, N) # knighted rook (empress\/chancellor)$/;"	v
 NtB	pieces.py	/^NtB = add(N, chain(modify(N, nocapt), modify(B, outward))) # knight then bishop (unicorn)$/;"	v
@@ -39,10 +40,11 @@ Piece	objects.py	/^class Piece:$/;"	c
 Point	graphics.py	/^class Point(GraphicsObject):$/;"	c
 Polygon	graphics.py	/^class Polygon(GraphicsObject):$/;"	c
 Q	pieces.py	/^Q = add(B, R) # queen$/;"	v
-R	pieces.py	/^R = makerider(0,1) # rook$/;"	v
+R	pieces.py	/^R = makerider((0,1)) # rook$/;"	v
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
+Rose	pieces.py	/^Rose = makerider((1,2), pf=pathfinders.circular) # circular knight$/;"	v
 Square	objects.py	/^class Square:$/;"	c
-Testpiece	pieces.py	/^Testpiece = NN$/;"	v
+Testpiece	pieces.py	/^Testpiece = Boyscout$/;"	v
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
@@ -163,7 +165,7 @@ idem	pathfinders.py	/^def idem(m):$/;"	f
 imageCache	graphics.py	/^    imageCache = {} # tk photoimages go here to avoid GC while drawn $/;"	v	class:Image
 inbounds	objects.py	/^    def inbounds(self, loc):$/;"	m	class:Board
 init	drawer.py	/^def init(width, height):$/;"	f
-initP	pieces.py	/^initP = modlist(makerider(0,1,2), [onrow(1), direct('f'), nocapt]) # initial pawn move, captures excluded$/;"	v
+initP	pieces.py	/^initP = modlist(makerider((0,1),2), [onrow(1), direct('f'), nocapt]) # initial pawn move, captures excluded$/;"	v
 invmod	moves.py	/^def invmod(mod):$/;"	f
 isClosed	graphics.py	/^    def isClosed(self):$/;"	m	class:GraphWin
 isOpen	graphics.py	/^    def isOpen(self):$/;"	m	class:GraphWin
@@ -175,7 +177,7 @@ main	main.py	/^def main():$/;"	f
 makeRect	drawer.py	/^def makeRect(corner, width, height):$/;"	f
 makeleaper	moves.py	/^def makeleaper(a, b):$/;"	f
 makeleapgen	moves.py	/^def makeleapgen(a, b):$/;"	f
-makerider	moves.py	/^def makerider(a, b, range=-1, pf=pathfinders.idem):$/;"	f
+makerider	moves.py	/^def makerider($/;"	f
 mergemoves	moves.py	/^def mergemoves(m1, m2):$/;"	f
 modify	moves.py	/^def modify(p, mod):$/;"	f
 modlist	moves.py	/^def modlist(p, ml):$/;"	f
@@ -199,7 +201,9 @@ plot	graphics.py	/^    def plot(self, x, y, color="black"):$/;"	m	class:GraphWin
 plotPixel	graphics.py	/^    def plotPixel(self, x, y, color="black"):$/;"	m	class:GraphWin
 promptClose	graphics.py	/^    def promptClose(self, x, y=None):$/;"	m	class:GraphWin
 promptMouse	graphics.py	/^    def promptMouse(self, x, y, prompt):$/;"	m	class:GraphWin
+prunelen	moves.py	/^def prunelen(f):$/;"	f
 q	moves.py	/^    def q(board, m):$/;"	f	function:invmod
+q	moves.py	/^    def q(board, m):$/;"	f	function:prunelen
 q	moves.py	/^    def q(board, src):$/;"	f	function:add
 q	moves.py	/^    def q(board, src):$/;"	f	function:chain
 q	moves.py	/^    def q(board, src, prev=None):$/;"	f	function:modify
@@ -231,7 +235,7 @@ setText	graphics.py	/^    def setText(self,text):$/;"	m	class:Text
 setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Entry
 setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Text
 setWidth	graphics.py	/^    def setWidth(self, width):$/;"	m	class:GraphicsObject
-shortR	pieces.py	/^shortR = makerider(0,1, 4) # short rook (range 4)$/;"	v
+shortR	pieces.py	/^shortR = makerider((0,1), 4) # short rook (range 4)$/;"	v
 spritemap	drawer.py	/^spritemap = {}$/;"	v
 squareside	drawer.py	/^squareside = 50 # side length of board square$/;"	v
 sublocs	moves.py	/^def sublocs(a, b):$/;"	f

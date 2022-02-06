@@ -56,21 +56,21 @@ def leapoffs(a,b):
 
 # no cylindrical wrapping
 def nowrap(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     if not board.inbounds(m.dest): # not allowed to go out of bounds
         return []
     return [m]
 
 # left-right cylindrical
 def leftrightcyl(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     m.dest = (m.dest[0] % board.width, m.dest[1]) # wrap around on the x axis
     return [m]
     # return nowrap(board, m) # still have to obey the top-down bounds
 
 # not very useful for standard chess, but here for completeness
 def updowncyl(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     m.dest = (m.dest[0], m.dest[1] % board.height) # wrap around on the y axis
     return [m]
     # return nowrap(board, m) # still have to obey the left-right bounds
@@ -86,13 +86,25 @@ def samequad(d1, d2):
 # special type of modifier that can only be applied to a subsequent move (in chaining)
 # prev is a tuple (prevboard, prevm)
 def outward(board, m, prev):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     prevm = prev[1]
     refdir = sublocs(m.src, prevm.src) # reference direction
     curdir = m.dir
     if samequad(refdir, curdir):
         return [m]
     return []
+
+
+# take in lambda, filter moves by path len
+def prunelen(f):
+    def q(board, m):
+        # m = deepcopy(m)
+        pathlen = len(m.aux['path']) # path len determined by number of leaps
+        if f(pathlen):
+            return [m]
+        else:
+            return []
+    return q
 
 
 # nothing in the path between src and dest may be occupied, because that would be a hop
@@ -102,7 +114,7 @@ def nohop(board, m):
     # print(m.src)
     # print(m.dest)
     # print(m.aux['path'])
-    m = deepcopy(m)
+    # m = deepcopy(m)
     for l in m.aux['path'][:-1]:
         if board.get(l) != None: # occupied
             return []
@@ -117,7 +129,7 @@ def onrow(r, src=True):
 # useful for pawns (initial move, promotion)
 # "row" here is relative to the forward direction, so it can either be ranks or files
 def onrowmod(board, m, r, src=True):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     forward = normalise(m.piece.forward) # assuming this is orthogonal
     rankorfile = 1 if forward[1] != 0 else 0 # whether to go by rank or file
 
@@ -138,7 +150,7 @@ def onrowmod(board, m, r, src=True):
 def ride(board, m, pf):
     # pf tells how to derive the next direction(s)
     # in the case of simple riders it is just the identity function in brackets
-    m = deepcopy(m)
+    # m = deepcopy(m)
     dir = m.dir
     newdirs = pf(m) # directions determined by pf, can be 0 or more
     newmoves = [Move(m.src, addlocs(m.dest, nd), nd, m.board, m.aux, piece=m.piece) for nd in newdirs] # create new moves by adding generated directions onto current dest
@@ -165,7 +177,7 @@ def direct(d):
 # restrict move by direction
 # forward, backward, left, right
 def dirmod(board, m, dirs):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     f = normalise(m.piece.forward) # normal vector telling which way is forward
     l = (-f[1], f[0]) # left
     r = (f[1], -f[0]) # right
@@ -187,7 +199,7 @@ def dirmod(board, m, dirs):
 # no revisiting the same location in your path with the same direction
 # this is important for, say, cylindrical/circular riders
 def noretrace(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
     path = m.aux['path']
     fullpath = [m.src] + path
     # note that path contains m.dest itself, so we must exclude that
@@ -211,7 +223,7 @@ def noretrace(board, m):
 
 # simplest move. implies capture by replacement and leaping, regardless of enemy or friend. simply overwrites dest with src, then deletes src
 def replace(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
 
     m.board = deepcopy(board)
     m.board.set(m.dest, m.board.get(m.src))
@@ -243,6 +255,7 @@ def replace(board, m):
 # this cannot always be applied, ex. applying this to nowrap would preserve out-of-bounds destinations
 def invmod(mod):
     def q(board, m):
+        # m = deepcopy(m)
         moves = mod(board, m)
         if moves == []:
             return [m]
@@ -292,7 +305,7 @@ def modify(p, mod):
 # expand and contract. we expand l (list of moves) into a list of lits of moves via f: board, move -> listof moves
 # and then flatten (contract) it
 def expcontr(board, l, f):
-    exp = [f(board, m) for m in l]
+    exp = [f(board, deepcopy(m)) for m in l]
     # newl = [m for e in exp for m in e]
     newl = flatten(exp)
     return newl
@@ -300,7 +313,7 @@ def expcontr(board, l, f):
 
 # ban friendly fire
 def nofriendly(board, m):
-    m = deepcopy(m)
+    # m = deepcopy(m)
 
     if 'captures' not in m.aux: # not a capture; allow
         return [m] # return unmodified
@@ -407,8 +420,14 @@ def extendmod(board, m, extmods, amt, pf):
 # boundkeepers = [noretrace, nowrap]
 boundkeepers = [nowrap]
 
-def makerider(a, b, range=-1, pf=pathfinders.idem):
-    p1 = makeleapgen(a,b) # leap generator for riders as well
+def makerider(
+        leap,
+        range=-1,
+        pf=pathfinders.idem,
+        extmods=[nowrap, noretrace],
+        aftmods=[nohop, replace, nofriendly]
+        ):
+    p1 = makeleapgen(*leap) # leap generator for riders as well
     # extmods = boundkeepers
     # idem = lambda l: [l] # the identity location pathfinder
     # # extendmod = lambda a, b: extend(a, b, extmods, range, idem)
@@ -420,13 +439,17 @@ def makerider(a, b, range=-1, pf=pathfinders.idem):
     # p4 = modify(p3, replace)
     # p5 = modify(p4, nofriendly) # no friendly fire
 
-    extmods = boundkeepers
-    p5 = modlist(p1, [
-        extend(extmods, range, pathfinders.idem),
-        nohop,
-        replace,
-        nofriendly
-        ])
+    # extmods = boundkeepers
+    # p5 = modlist(p1, [
+    #     extend(extmods, range, pf),
+    #     nohop,
+    #     replace,
+    #     nofriendly
+    #     ])
+    p5 = modlist(p1,
+            [extend(extmods, range, pf)]
+            + aftmods
+            )
 
     return p5
 

@@ -380,3 +380,13 @@ if there is only one in path, then it just came out of makeleapgen() and is curr
 then we diverge
 if there are two or more, we can then derive the general direction (three points including src) it's going in, and continue
 all of this can be done through rotate(), mirror(), etc. operations. that is the basis of crooked and cylindrical pipeces
+
+
+this may not be the most general form but it's reasonable:
+a rider has these components:
+    a leap generator             : tells you how to start
+    a range (finite or infinite) : tells you when to stop
+    a pathfinder                 : tells you where to go next
+    on-the-way modifiers         : modify/prune the path as it's created
+    after-the-fact modifiers     : modify/prune the path after it's created
+
