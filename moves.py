@@ -94,6 +94,15 @@ def outward(board, m, prev):
         return [m]
     return []
 
+# stricter than outward. has to move directly away from previous src
+def diraway(board, m, prev):
+    prevm = prev[1]
+    refdir = sublocs(m.src, prevm.src) # reference direction
+    curdir = m.dir
+    if reduce(refdir) == reduce(curdir):
+        return [m]
+    return []
+
 
 # take in lambda, filter moves by path len
 def prunelen(f):
@@ -340,6 +349,12 @@ def nofriendly(board, m):
 #         for m in moves:
 #             if 'captures' not in m.aux: # nothing gets captured
 
+
+# reduce a dir tuple by dividing by gcd
+def reduce(d):
+    gcd = math.gcd(*d)
+    return (d[0]/gcd, d[1]/gcd)
+
 # add two locations coordinate wise
 def addlocs(a, b):
     # print(a, b)
@@ -565,4 +580,4 @@ def chain(*pieces):
 
     return q
 
-print(diradj((1,2)))
+# print(diradj((1,2)))

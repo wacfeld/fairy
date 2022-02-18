@@ -23,7 +23,19 @@ NK = add(K, N) # knighted king
 KB = add(B, K) # crowned bishop (dragon horse)
 KR = add(R, K) # crowned rook (dragon king)
 
-shortR = makerider((0,1), 4) # short rook (range 4)
+# shortR = makerider((0,1), 4) # short rook (range 4)
+shortR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x: x <= 4)])
+# slipR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x: x % 2 == 1)])
+# skipR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x: x % 2 == 0)])
+# skipR = makerider((0,2))
+# unshortR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x: x >= 4)])
+
+# TODO implement these as three functions (ski, skip, slip)
+# will likely require the representation of pieces as objects containing extmods, aftmods, range, amt, etc.
+skiR = chain(modify(W,nocapt), modify(R, diraway))
+skipR = makerider((0,2))
+slipR = add(W, chain(modify(W, nocapt), modify(makerider((0,2)), diraway)))
+Testpiece = slipR
 
 forW = modify(W, direct('f')) # forward only wazir
 forF = modify(F, direct('f')) # forward only ferz
@@ -46,7 +58,6 @@ Rose = makerider((1,2), pf=pathfinders.circular) # circular knight
 Boyscout = makerider((1,1), pf=pathfinders.crooked) # crooked bishop
 
 Testpiece = Boyscout
-# Testpiece = NN
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))

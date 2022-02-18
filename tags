@@ -44,7 +44,7 @@ R	pieces.py	/^R = makerider((0,1)) # rook$/;"	v
 Rectangle	graphics.py	/^class Rectangle(_BBox):$/;"	c
 Rose	pieces.py	/^Rose = makerider((1,2), pf=pathfinders.circular) # circular knight$/;"	v
 Square	objects.py	/^class Square:$/;"	c
-Testpiece	pieces.py	/^Testpiece = Boyscout$/;"	v
+Testpiece	pieces.py	/^Testpiece = slipR$/;"	v
 Text	graphics.py	/^class Text(GraphicsObject):$/;"	c
 Transform	graphics.py	/^class Transform:$/;"	c
 UNSUPPORTED_METHOD	graphics.py	/^UNSUPPORTED_METHOD = "Object doesn't support operation"$/;"	v
@@ -125,6 +125,7 @@ compmod	moves.py	/^def compmod(board, lmod):$/;"	f
 crooked	pathfinders.py	/^def crooked(m):$/;"	f
 delpiece	drawer.py	/^def delpiece(s):$/;"	f
 diradj	moves.py	/^def diradj(d):$/;"	f
+diraway	moves.py	/^def diraway(board, m, prev):$/;"	f
 direct	moves.py	/^def direct(d):$/;"	f
 dirmod	moves.py	/^def dirmod(board, m, dirs):$/;"	f
 draw	graphics.py	/^    def draw(self, graphwin):$/;"	m	class:GraphicsObject
@@ -208,6 +209,7 @@ q	moves.py	/^    def q(board, src):$/;"	f	function:add
 q	moves.py	/^    def q(board, src):$/;"	f	function:chain
 q	moves.py	/^    def q(board, src, prev=None):$/;"	f	function:modify
 readfen	main.py	/^def readfen(fen):$/;"	f
+reduce	moves.py	/^def reduce(d):$/;"	f
 replace	moves.py	/^def replace(board, m):$/;"	f
 res	moves.py	/^    def res(board, m):$/;"	f	function:compmod
 ride	moves.py	/^def ride(board, m, pf):$/;"	f
@@ -235,7 +237,10 @@ setText	graphics.py	/^    def setText(self,text):$/;"	m	class:Text
 setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Entry
 setTextColor	graphics.py	/^    def setTextColor(self, color):$/;"	m	class:Text
 setWidth	graphics.py	/^    def setWidth(self, width):$/;"	m	class:GraphicsObject
-shortR	pieces.py	/^shortR = makerider((0,1), 4) # short rook (range 4)$/;"	v
+shortR	pieces.py	/^shortR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x: x <= 4)])$/;"	v
+skiR	pieces.py	/^skiR = chain(modify(W,nocapt), modify(R, diraway))$/;"	v
+skipR	pieces.py	/^skipR = makerider((0,2))$/;"	v
+slipR	pieces.py	/^slipR = add(W, chain(modify(W, nocapt), modify(makerider((0,2)), diraway)))$/;"	v
 spritemap	drawer.py	/^spritemap = {}$/;"	v
 squareside	drawer.py	/^squareside = 50 # side length of board square$/;"	v
 sublocs	moves.py	/^def sublocs(a, b):$/;"	f
