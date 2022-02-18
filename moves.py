@@ -115,6 +115,19 @@ def prunelen(f):
             return []
     return q
 
+# allow exactly 1 hop over 1 hurdle
+def hop(board, m):
+    middle = m.aux['path'][:-1]
+    hurdles = 0
+    for i in middle:
+        if board.get(i) != None:
+            hurdles += 1
+
+    if hurdles == 1:
+        return [m]
+    else:
+        return []
+
 
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)

@@ -57,7 +57,10 @@ WtB = add(W, chain(modify(W, nocapt), modify(B, outward))) # wazir then bishop
 Rose = makerider((1,2), pf=pathfinders.circular) # circular knight
 Boyscout = makerider((1,1), pf=pathfinders.crooked) # crooked bishop
 
-Testpiece = Boyscout
+hopR = makerider((0,1), aftmods=[hop, replace, nofriendly])
+Cannon = add(modify(R, nocapt), modify(hopR, capt))
+
+Testpiece = Cannon
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))
