@@ -45,7 +45,7 @@ captP = modlist(F, [direct('f'), capt]) # pawns capture as forward ferzes
 nocaptP = modlist(W, [direct('f'), nocapt]) # pawns move as forward wazirs
 
 P = add(initP, captP, nocaptP) # the pawn
-P = add(modify(P, invmod(onrow(7, False))), modlist(P, [onrow(7, False), promote('q')]))
+P = add(modify(P, invmod(onrow(7, False))), modlist(P, [onrow(7, False), promote('q')])) # promotion
 
 # moves once like a Ferz (F), then optionally like a Rook, outward from original location (modify(R, outward))
 FtR = add(F, chain(modify(F, nocapt), modify(R, outward))) # ferz then rook (aanca/gryphon)
@@ -64,8 +64,14 @@ locR = modlist(hopR, [nocapt, locust, nofriendly])
 shootRook = makerider((0,1), aftmods=[nohop, replace, nofriendly, shoot])
 
 
+hopB = makerider((1,1), aftmods=[hop, replace, nofriendly])
+hopQ = add(hopB, hopR)
+grasshopmod = prunepath(lambda board, path: board.get(path[-2]) != None)
+Grasshopper = modify(hopQ, grasshopmod)
+
+
 Checker = add(modlist(F, [nocapt, direct('f')]), makerider((1,1), aftmods=[replace, nocapt, hop, locust, nofriendly, prunelen(lambda x: x == 2), direct('f')]))
-Testpiece = Checker
+Testpiece = Grasshopper
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))

@@ -4,6 +4,7 @@
 # moves are in the form of a pair of a location, and the resulting board
 ^^^ partially outdated
 
+* pieces to implement
 - [X] leapers
 - [X] riders
 - [X] pawns
@@ -34,7 +35,7 @@
 - [X] shooting pieces
 - [ ] iron piece (cannot be captured)
 
-variants to implement
+* variants to implement
 - [ ] baroque
     - [ ] pincer
     - [ ] withdrawer
@@ -50,7 +51,7 @@ variants to implement
 - [ ] make compatible or semi-compatible with betza notation or your own notation
 - [ ] streamline the modification process and piece creation process. lists of modifications, leapers->riders more direct, etc.
 
-gameplay
+* gameplay
 - [x] make a chessboard
 - [x] figure out where clicks land
 - [x] put pieces on the chessboard
@@ -64,6 +65,7 @@ gameplay
 - [ ] make readfen() call drawer.update()
 - [ ] list moves, reset board, free edit, undo moves, etc.
 
+* planning
 a proto-piece is simply a list of offsets, independent of location and surroundings of a piece
 
 a piece is a function that takes in a board and loc and returns:

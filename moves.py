@@ -115,6 +115,18 @@ def prunelen(f):
             return []
     return q
 
+
+# take in lambda, filter moves by path contents
+def prunepath(f):
+    def q(board, m):
+        path = m.aux['path']
+        if f(board, path):
+            return [m]
+        else:
+            return []
+    return q
+
+
 # allow exactly 1 hop over 1 hurdle
 def hop(board, m):
     middle = m.aux['path'][:-1]
