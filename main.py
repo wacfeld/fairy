@@ -4,8 +4,8 @@ import pieces
 from objects import *
 
 
-height = 16
-width = 16
+height = 8
+width = 8
 
 
 # read FEN, set up board accordingly, and possibly other things (side to move, etc.)
@@ -58,8 +58,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        # piece = piecemap[board.get(l1).name]
-        piece = pieces.Testpiece
+        piece = piecemap[board.get(l1).name]
+        # piece = pieces.Testpiece
         moves = piece(board, l1)
         # print(moves)
 
@@ -95,7 +95,7 @@ def main():
     standard = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     testfen = '88/88/88/88/88/88/88/88/88/88/88/88/88/88/88/8NNNNnnnn w KQkq - 0 1'
 
-    board = readfen(testfen)
+    board = readfen(standard)
     play(board, 1)
 
 

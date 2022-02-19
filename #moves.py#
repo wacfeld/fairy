@@ -140,15 +140,6 @@ def locust(board, m):
         m.board.set(i, None)
     return [m]
 
-
-# if captures, then go back to original place
-def shoot(board, m):
-    if 'captures' in m.aux:
-        m.board.set(m.src, m.piece)
-        m.board.set(m.dest, None)
-    return [m]
-
-
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)
 def nohop(board, m):
@@ -468,15 +459,14 @@ def extendmod(board, m, extmods, amt, pf):
     return moves
 
 # boundkeepers = [updowncyl, leftrightcyl, noretrace]
-boundkeepers = [leftrightcyl, nowrap, noretrace]
-# boundkeepers = [leftrightcyl, nowrap, noretrace]
+# boundkeepers = [noretrace, nowrap]
+boundkeepers = [nowrap]
 
 def makerider(
         leap,
         range=-1,
         pf=pathfinders.idem,
-        # extmods=[nowrap, noretrace],
-        extmods=boundkeepers,
+        extmods=[leftrightcyl, noretrace],
         aftmods=[nohop, replace, nofriendly]
         ):
     p1 = makeleapgen(*leap) # leap generator for riders as well

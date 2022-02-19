@@ -60,8 +60,8 @@ hopR = makerider((0,1), aftmods=[hop, replace, nofriendly])
 Cannon = add(modify(R, nocapt), modify(hopR, capt)) # chinese chess cannon. no capture like rook, capture like hopping rook
 
 locR = modlist(hopR, [nocapt, locust, nofriendly])
-Thing = add(modify(R, nocapt), locR)
-Testpiece = Thing
+shootRook = makerider((0,1), aftmods=[nohop, replace, nofriendly, shoot])
+Testpiece = shootRook
 
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical

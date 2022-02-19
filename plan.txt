@@ -31,7 +31,7 @@
 - [ ] lion (twice moving king)
 - [ ] fire demon (passive effect)
 - [ ] joker
-- [ ] shooting pieces
+- [X] shooting pieces
 - [ ] iron piece (cannot be captured)
 
 variants to implement
