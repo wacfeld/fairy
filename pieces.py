@@ -61,8 +61,10 @@ Cannon = add(modify(R, nocapt), modify(hopR, capt)) # chinese chess cannon. no c
 
 locR = modlist(hopR, [nocapt, locust, nofriendly])
 shootRook = makerider((0,1), aftmods=[nohop, replace, nofriendly, shoot])
-Testpiece = shootRook
 
+
+Checker = add(modlist(F, [nocapt, direct('f')]), makerider((1,1), aftmods=[replace, nocapt, hop, locust, nofriendly, prunelen(lambda x: x == 2), direct('f')]))
+Testpiece = Checker
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))

@@ -58,8 +58,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        piece = piecemap[board.get(l1).name]
-        # piece = pieces.Testpiece
+        # piece = piecemap[board.get(l1).name]
+        piece = pieces.Testpiece
         moves = piece(board, l1)
         # print(moves)
 
@@ -94,8 +94,9 @@ def main():
     drawer.init(width, height)
     standard = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
     testfen = '88/88/88/88/88/88/88/88/88/88/88/88/88/88/88/8NNNNnnnn w KQkq - 0 1'
+    checkers = '1p1p1p1p/p1p1p1p1/1p1p1p1p/8/8/P1P1P1P1/1P1P1P1P/P1P1P1P1 w KQkq - 0 1'
 
-    board = readfen(standard)
+    board = readfen(checkers)
     play(board, 1)
 
 

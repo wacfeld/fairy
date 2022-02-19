@@ -18,7 +18,7 @@
   - [X] min
   - [X] max
     - (through amt, i think)
-- [ ] checkers
+- [X] checkers
 - [-] hoppers
   - [X] cannons
   - [X] locusts
