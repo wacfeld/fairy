@@ -58,8 +58,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        piece = piecemap[board.get(l1).name]
-        # piece = pieces.Testpiece
+        # piece = piecemap[board.get(l1).name]
+        piece = pieces.Testpiece
         moves = piece(board, l1)
         # print(moves)
 
@@ -74,6 +74,8 @@ def play(board, side): # get moves from alternating sides
         l2 = drawer.getmousesquare().getloc()
         if l2 in movedests: # legal move
             boards = [m.board for m in moves if m.dest == l2] # get all resulting boards with that destination
+            # moves = [m for m in moves if m.dest == l2]
+            # print(moves[0].aux['path'])
             # TODO implement check to see if all boards are same, in which case go ahead
             # otherwise need some way to select which move to make, perhaps by highlighting path and all side effects
             # (by simple before-after comparison)

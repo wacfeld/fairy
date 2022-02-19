@@ -135,6 +135,7 @@ def hop(board, m):
         if board.get(i) != None:
             hurdles += 1
 
+    # print(hurdles)
     if hurdles == 1:
         return [m]
     else:
@@ -477,6 +478,7 @@ def extendmod(board, m, extmods, amt, pf):
         # note how this looping setup ensures that every move, including the original one passed to extend(), gets put through this
         for nm in newmoves: # add to path only after performing necessary modifications, which may include altering nm.dest, or removing altogether
             # m.src itself is not in the path! however m.dest (and everything in between) is
+            # nm.aux['path'] = deepcopy(nm.aux['path'])
             nm.aux['path'].append(nm.dest)
         moves += newmoves
 
@@ -496,7 +498,7 @@ def extendmod(board, m, extmods, amt, pf):
     return moves
 
 # boundkeepers = [updowncyl, leftrightcyl, noretrace]
-boundkeepers = [leftrightcyl, nowrap, noretrace]
+boundkeepers = [nowrap, noretrace]
 # boundkeepers = [leftrightcyl, nowrap, noretrace]
 
 def makerider(
