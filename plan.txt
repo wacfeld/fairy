@@ -6,8 +6,8 @@
 
 - [X] leapers
 - [X] riders
-- [-] pawns
-  - [ ] promotion
+- [X] pawns
+  - [X] promotion (to queen)
   - [X] initial moves
 - [ ] en passant, castling
 - [ ] check, checkmate, (royalty) illegal moves

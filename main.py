@@ -58,8 +58,8 @@ def play(board, side): # get moves from alternating sides
         drawer.hlloc(l1)
 
         # get possible moves based on piece type
-        # piece = piecemap[board.get(l1).name]
-        piece = pieces.Testpiece
+        piece = piecemap[board.get(l1).name]
+        # piece = pieces.Testpiece
         moves = piece(board, l1)
         # print(moves)
 

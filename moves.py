@@ -162,6 +162,22 @@ def nohop(board, m):
             return []
     return [m]
 
+# make b same side as a
+def makesameside(a, b):
+    if a.isupper():
+        return b.upper()
+    else:
+        return b.lower()
+
+# wrapper
+def promote(piece):
+    return lambda a, b: promotemod(a, b, piece)
+
+def promotemod(board, m, piece):
+    forward = m.piece.forward
+    m.board.set(m.dest, Piece(makesameside(m.piece.name, piece), forward))
+    return [m]
+
 
 # wrapper
 def onrow(r, src=True):

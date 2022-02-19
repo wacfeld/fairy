@@ -45,6 +45,7 @@ captP = modlist(F, [direct('f'), capt]) # pawns capture as forward ferzes
 nocaptP = modlist(W, [direct('f'), nocapt]) # pawns move as forward wazirs
 
 P = add(initP, captP, nocaptP) # the pawn
+P = add(modify(P, invmod(onrow(7, False))), modlist(P, [onrow(7, False), promote('q')]))
 
 # moves once like a Ferz (F), then optionally like a Rook, outward from original location (modify(R, outward))
 FtR = add(F, chain(modify(F, nocapt), modify(R, outward))) # ferz then rook (aanca/gryphon)
