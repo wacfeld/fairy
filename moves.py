@@ -129,6 +129,17 @@ def hop(board, m):
         return []
 
 
+# captures everything it jumps over
+def locust(board, m):
+    middle = m.aux['path'][:-1]
+    for i in middle:
+        if m.board.get(i) != None:
+            if 'captures' not in m.aux:
+                m.aux['captures'] = []
+            m.aux['captures'].append(Capture(i, True)) # necessary capture
+        m.board.set(i, None)
+    return [m]
+
 # nothing in the path between src and dest may be occupied, because that would be a hop
 # dest can be occupied; that's a capture (presumably)
 def nohop(board, m):
@@ -252,7 +263,10 @@ def replace(board, m):
     m.board.set(m.src, None)
     # see if any captures occur
     if board.get(m.dest) != None: # something was captured
-        m.aux['captures'] = [Capture(m.dest, True)] # add to list of things it captures
+        if 'captures' not in m.aux:
+            m.aux['captures'] = []
+        # m.aux['captures'] = [Capture(m.dest, True)] # add to list of things it captures
+        m.aux['captures'].append(Capture(m.dest, True)) # add to list of things it captures
         # True indicates it is a necessary capture
     return [m]
 

@@ -35,7 +35,6 @@ shortR = makerider((0,1), aftmods=[nohop, replace, nofriendly, prunelen(lambda x
 skiR = chain(modify(W,nocapt), modify(R, diraway))
 skipR = makerider((0,2))
 slipR = add(W, chain(modify(W, nocapt), modify(makerider((0,2)), diraway)))
-Testpiece = slipR
 
 forW = modify(W, direct('f')) # forward only wazir
 forF = modify(F, direct('f')) # forward only ferz
@@ -58,9 +57,12 @@ Rose = makerider((1,2), pf=pathfinders.circular) # circular knight
 Boyscout = makerider((1,1), pf=pathfinders.crooked) # crooked bishop
 
 hopR = makerider((0,1), aftmods=[hop, replace, nofriendly])
-Cannon = add(modify(R, nocapt), modify(hopR, capt))
+Cannon = add(modify(R, nocapt), modify(hopR, capt)) # chinese chess cannon. no capture like rook, capture like hopping rook
 
-Testpiece = Cannon
+locR = modlist(hopR, [nocapt, locust, nofriendly])
+Thing = add(modify(R, nocapt), locR)
+Testpiece = Thing
+
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
 # Testpiece = modify(F, direct('fr'))

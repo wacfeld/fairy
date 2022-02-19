@@ -4,29 +4,28 @@
 # moves are in the form of a pair of a location, and the resulting board
 ^^^ partially outdated
 
-- [x] leapers
-- [x] riders
-- [x] pawns
-    - [ ] promotion
-    - [x] initial moves
+- [X] leapers
+- [X] riders
+- [-] pawns
+  - [ ] promotion
+  - [X] initial moves
 - [ ] en passant, castling
 - [ ] check, checkmate, (royalty) illegal moves
-- [ ] hoppers
-- [x] bent riders (one moveset after another, influencing each other possibly)
-- [x] circular riders
-- [x] crooked riders
-- [x] ranged riders
-    - [x] min
-    - [x] max
-        - (through amt, i think)
+- [X] bent riders (one moveset after another, influencing each other possibly)
+- [X] circular riders
+- [X] crooked riders
+- [X] ranged riders
+  - [X] min
+  - [X] max
+    - (through amt, i think)
 - [ ] checkers
-- [ ] hoppers
-    - [ ] cannons
-    - [ ] locusts
-    - [ ] grasshoppers
+- [-] hoppers
+  - [X] cannons
+  - [X] locusts
+  - [ ] grasshoppers
 - [ ] marines
-- [x] cylindrical
-- [x] ski, skip, slip riders
+- [X] cylindrical
+- [X] ski, skip, slip riders
 - [ ] falcon
 - [ ] horse
 - [ ] lion (twice moving king)
