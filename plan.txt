@@ -20,11 +20,11 @@
   - [X] max
     - (through amt, i think)
 - [X] checkers
-- [-] hoppers
+- [X] hoppers
   - [X] cannons
   - [X] locusts
-  - [ ] grasshoppers
-- [ ] marines
+  - [X] grasshoppers
+- [X] marines
 - [X] cylindrical
 - [X] ski, skip, slip riders
 - [ ] falcon
@@ -34,6 +34,13 @@
 - [ ] joker
 - [X] shooting pieces
 - [ ] iron piece (cannot be captured)
+  
+* do these, then stop
+- [ ] falcon
+- [ ] joker
+- [ ] baroque chess
+- [ ] alice chess
+- [ ] brainstorm stuff
 
 * variants to implement
 - [ ] baroque

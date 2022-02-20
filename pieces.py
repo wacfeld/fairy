@@ -71,7 +71,9 @@ Grasshopper = modify(hopQ, grasshopmod)
 
 
 Checker = add(modlist(F, [nocapt, direct('f')]), makerider((1,1), aftmods=[replace, nocapt, hop, locust, nofriendly, prunelen(lambda x: x == 2), direct('f')]))
-Testpiece = Grasshopper
+
+marR = add(modify(R, nocapt), locR)
+Testpiece = marR
 
 
 # Testpiece = modlist(R, [leftrightcyl]) # cylindrical
