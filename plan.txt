@@ -34,12 +34,14 @@
 - [ ] joker
 - [X] shooting pieces
 - [ ] iron piece (cannot be captured)
+- [ ] atomic captures
   
 * do these, then stop
 - [ ] falcon
 - [ ] joker
 - [ ] baroque chess
 - [ ] alice chess
+- [ ] long leaper
 - [ ] brainstorm stuff
 
 * variants to implement
@@ -398,3 +400,11 @@ a rider has these components:
     on-the-way modifiers         : modify/prune the path as it's created
     after-the-fact modifiers     : modify/prune the path after it's created
 
+
+atomic captures actually turn out to present an interesting problem
+it's easy to implement something where everything surrounding a capture is also captured
+however it's hard to filter out exploding the pawns after the fact, as happens in atomic chess
+we can't simply apply a 'no pawn captures' modifier afterwards because the initial capture can involve pawns
+
+we could just have a general capture-modifier generator which takes in a lambda which looks at the capture, sees if it's an explosion, and so on
+maybe captures should have an 'aux', or maybe that is too far

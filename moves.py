@@ -22,6 +22,7 @@ def flatten(ll):
     return [x for l in ll for x in l]
 
 
+
 # check if two pieces are on the same side
 def sameside(p1, p2):
     return (p1.name.isupper() and p2.name.isupper()) or (p1.name.islower() and p2.name.islower())
@@ -346,6 +347,12 @@ def capt(board, m):
     
 # opposite
 nocapt = invmod(capt)
+
+# booms all captures
+# def boom(board, m):
+#     if 'captures' not in m.aux: # no captures, no booms
+#         return [m]
+
 
 
 # apply modifiers in a list, left to right
